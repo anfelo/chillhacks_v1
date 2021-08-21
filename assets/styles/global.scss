@@ -1,0 +1,296 @@
+@import "./theme.scss";
+@import "/node_modules/bulma/bulma.sass";
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1em;
+}
+
+body.dark-theme {
+  --bg-color: #15202b;
+  --text-color: white;
+  --text-hover-color: #ddd;
+  --h-color: white;
+  --btn-color: white;
+  --btn-border: white;
+  --btn-shadow: white;
+  --code-bg: #243647;
+  --code-text-color: rgb(171, 178, 191);
+  --card-bg: #38444d;
+  --card-active-bg: #45535e;
+}
+
+body.light-theme {
+  --bg-color: white;
+  --text-color: #222;
+  --text-hover-color: #444;
+  --h-color: black;
+  --btn-color: black;
+  --btn-border: black;
+  --btn-shadow: black;
+  --code-bg: #222;
+  --code-text-color: rgb(171, 178, 191);
+  --card-bg: #38444d;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $family-secondary;
+  color: var(--h-color);
+  font-weight: bold !important;
+}
+
+code,
+pre {
+  background-color: var(--code-bg) !important;
+  font-family: $family-mono;
+}
+
+blockquote {
+  font-style: italic;
+}
+
+.card-body p {
+  color: var(--h-color) !important;
+}
+
+.blue-html {
+  background: #39add1;
+}
+
+.blue-css {
+  background: #3079ab;
+}
+
+.pink-js {
+  background: #c25975;
+}
+
+.red-ruby {
+  background: #e15258;
+}
+
+.orange {
+  background-color: #f9845b;
+}
+
+.purple-wp {
+  background-color: #838cc7;
+}
+
+.purple-php {
+  background-color: #7d669e;
+}
+
+.green-ios {
+  background-color: #53bbb4;
+}
+
+.green-android {
+  background-color: #51b46d;
+}
+
+.green-node {
+  background-color: #43853d;
+}
+
+.yellow-sun {
+  background-color: #e0ab18;
+}
+
+.pink-python {
+  background-color: #f092b0;
+}
+
+/* Code
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+code {
+  padding: 0.2rem 0.5rem;
+  margin: 0 0.2rem;
+  font-size: 90%;
+  white-space: nowrap;
+  color: var(--code-text-color) !important;
+  background: var(--code-bg);
+  border-radius: 4px;
+}
+pre > code {
+  display: block;
+  padding: 1rem 1.5rem;
+  white-space: pre;
+}
+pre {
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+code,
+pre {
+  background-color: var(--code-bg) !important;
+}
+
+/* Blog
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.article-content h3 {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.article-content p {
+  margin-bottom: 15px;
+}
+
+.article-content ul {
+  list-style: disc;
+  padding-left: 40px;
+}
+
+.article-content ol {
+  padding-left: 40px;
+}
+
+body.dark-theme {
+  .title,
+  .subtitle,
+  strong {
+    color: var(--text-color);
+  }
+}
+
+body.dark-theme .subtitle {
+  color: var(--text-color);
+}
+
+body.dark-theme {
+  a:hover {
+    color: lighten($link, 20%);
+  }
+
+  .box {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
+
+  .card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
+
+  .tabs {
+    li:not(.is-active) a {
+      color: var(--text-color);
+    }
+
+    li:not(.is-active) a:hover {
+      color: $info;
+      border-bottom-color: $info;
+    }
+  }
+
+  .navbar-dropdown {
+    background-color: var(--card-bg);
+
+    .navbar-item {
+      color: var(--text-color);
+    }
+
+    .navbar-item:hover {
+      background-color: var(--card-active-bg);
+      color: var(--text-color);
+    }
+  }
+}
+
+.navbar-link {
+  align-items: flex-start !important;
+}
+
+@media (max-width: 768px) {
+  .navbar-menu {
+    .navbar-item {
+      text-align: center;
+    }
+  }
+
+  body.dark-theme {
+    .navbar-menu {
+      background-color: var(--card-bg);
+      .navbar-item {
+        color: var(--text-color);
+      }
+      .navbar-item:hover {
+        background-color: var(--card-active-bg);
+        color: var(--text-color);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar-menu {
+    .navbar-item {
+      text-align: center;
+    }
+  }
+
+  body.dark-theme {
+    .navbar-menu {
+      background-color: var(--card-bg);
+      .navbar-item {
+        color: var(--text-color);
+      }
+      .navbar-item:hover {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+      }
+    }
+  }
+}
+
+/* Bulma Overrites
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.navbar.is-dark {
+  background-color: var(--bg-color) !important;
+}
+
+.has-background-dark {
+  background-color: var(--bg-color) !important;
+}
+
+.button {
+  position: relative;
+  border: none;
+  border-bottom: 4px solid;
+  border-radius: $radius-large;
+  overflow: hidden;
+  transition: all 0.2s;
+
+  &.is-primary {
+    border-color: lighten($primary, 20%);
+  }
+  &.is-warning {
+    border-color: lighten($warning, 20%);
+  }
+  &.is-danger {
+    border-color: lighten($danger, 20%);
+  }
+  &.is-link {
+    border-color: lighten($link, 20%);
+  }
+  &.is-info {
+    border-color: lighten($info, 20%);
+  }
+  &.is-success {
+    border-color: lighten($success, 20%);
+  }
+  &.is-dark {
+    border-color: lighten($success, 20%);
+  }
+}
