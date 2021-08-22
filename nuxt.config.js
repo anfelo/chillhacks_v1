@@ -28,7 +28,10 @@ export default {
         src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js",
         defer: true
       }
-    ]
+    ],
+    bodyAttrs: {
+      class: "dark-theme"
+    }
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

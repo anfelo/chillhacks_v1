@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1 class="title">Chillhacks Courses</h1>
+  <div class="container">
+    <h1 class="title has-text-primary">Chillhacks Courses</h1>
   </div>
 </template>
 
