@@ -7,8 +7,7 @@
     >
       <div class="navbar-brand">
         <nuxt-link class="navbar-item" to="/">
-          <img src="/img/logo-orange.svg" height="28" alt="Chillhacks Logo" />
-          <span>chillhacks</span>
+          <span>🧊hacks</span>
         </nuxt-link>
 
         <span

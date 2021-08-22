@@ -4,16 +4,19 @@
     <main :class="appTheme === 'dark-theme' ? 'has-background-dark' : ''">
       <Nuxt />
     </main>
+    <AppFooter />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import AppNavbar from "@/components/AppNavbar.vue";
+import AppFooter from "@/components/AppFooter.vue";
 import * as fromLocalStorage from "@/services/localStorage";
 export default {
   components: {
-    AppNavbar
+    AppNavbar,
+    AppFooter
   },
   mounted() {
     const theme = fromLocalStorage.loadEntry("theme");
