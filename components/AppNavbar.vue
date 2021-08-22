@@ -7,7 +7,7 @@
     >
       <div class="navbar-brand">
         <nuxt-link class="navbar-item" to="/">
-          <span>🧊hacks</span>
+          <span>chillhacks</span>
         </nuxt-link>
 
         <span
@@ -30,10 +30,10 @@
       >
         <div class="navbar-end">
           <nuxt-link class="navbar-item" to="/courses">
-            courses
+            Courses
           </nuxt-link>
           <nuxt-link class="navbar-item" to="/login">
-            login
+            Login
           </nuxt-link>
           <div class="navbar-toggle">
             <AppToggleSwitch

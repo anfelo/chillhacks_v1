@@ -9,22 +9,24 @@
           <p class="subtitle">
             This is what Chillhacks is all about in a nutshell
           </p>
-          <div class="control has-icons-left">
-            <input
-              class="input is-primary is-medium"
-              type="text"
-              placeholder="Search courses"
-            />
-            <span class="icon is-medium is-left">
-              <i class="fas fa-search"></i>
-            </span>
+          <div class="buttons is-centered">
+            <nuxt-link to="/courses" class="button is-success is-large">
+              <span class="icon">
+                <i class="fas fa-arrow-right"></i>
+              </span>
+              <span>Explore Courses</span>
+            </nuxt-link>
           </div>
         </div>
       </div>
     </section>
-    <AppSectionDivider>
-      <AppSubjectsList />
-      <AppCoursesList />
+    <AppSectionDivider theme="is-info">
+      <AppSubjectsList theme="is-info" />
+      <AppCoursesList
+        theme="is-info"
+        title="⚡ Recently Added"
+        subtitle="Level up your coding skills"
+      />
     </AppSectionDivider>
   </div>
 </template>

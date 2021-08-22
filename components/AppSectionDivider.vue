@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="section-divider-shape top">
+    <div :class="`section-divider-shape top ${theme}`">
       <svg
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@
       </svg>
     </div>
     <slot />
-    <div class="section-divider-shape bottom">
+    <div :class="`section-divider-shape bottom ${theme}`">
       <svg
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    theme: {
+      type: String,
+      default: ""
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

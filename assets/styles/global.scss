@@ -273,26 +273,30 @@ body.dark-theme {
   transition: all 0.2s;
 
   &.is-primary {
-    border-color: lighten($primary, 20%);
+    border-color: darken($primary, 30%);
   }
   &.is-warning {
-    border-color: lighten($warning, 20%);
+    border-color: darken($warning, 30%);
   }
   &.is-danger {
-    border-color: lighten($danger, 20%);
+    border-color: darken($danger, 30%);
   }
   &.is-link {
-    border-color: lighten($link, 20%);
+    border-color: darken($link, 30%);
   }
   &.is-info {
-    border-color: lighten($info, 20%);
+    border-color: darken($info, 30%);
   }
   &.is-success {
-    border-color: lighten($success, 20%);
+    border-color: darken($success, 30%);
   }
   &.is-dark {
-    border-color: lighten($success, 20%);
+    border-color: darken($success, 30%);
   }
+}
+
+.button:hover {
+  transform: translateY(-5px);
 }
 
 .tag {

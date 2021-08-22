@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-small is-info">
+  <section :class="`hero is-small ${theme}`">
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
@@ -23,6 +23,12 @@ import AppCardList from "@/components/AppCardList.vue";
 export default {
   components: {
     AppCardList
+  },
+  props: {
+    theme: {
+      type: String,
+      default: ""
+    }
   },
   computed: {
     ...mapState(["courses", "subjects"]),
