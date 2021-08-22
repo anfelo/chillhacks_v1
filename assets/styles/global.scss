@@ -294,3 +294,7 @@ body.dark-theme {
     border-color: lighten($success, 20%);
   }
 }
+
+.tag {
+  border-bottom: 3px solid $jungle-green;
+}

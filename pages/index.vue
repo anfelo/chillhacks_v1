@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero is-large">
+    <section class="hero is-medium">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title has-text-primary">
@@ -11,7 +11,7 @@
           </p>
           <div class="control has-icons-left">
             <input
-              class="input is-primary is-large"
+              class="input is-primary is-medium"
               type="text"
               placeholder="Search courses"
             />
@@ -22,14 +22,17 @@
         </div>
       </div>
     </section>
-    <AppSubjectsList />
-    <AppCoursesList />
+    <AppSectionDivider>
+      <AppSubjectsList />
+      <AppCoursesList />
+    </AppSectionDivider>
   </div>
 </template>
 
 <script lang="ts">
 import AppCoursesList from "@/components/AppCoursesList.vue";
 import AppSubjectsList from "@/components/AppSubjectsList.vue";
+import AppSectionDivider from "@/components/AppSectionDivider.vue";
 
 export default {
   async asyncData({ store }) {
@@ -37,7 +40,8 @@ export default {
   },
   components: {
     AppCoursesList,
-    AppSubjectsList
+    AppSubjectsList,
+    AppSectionDivider
   }
 };
 </script>

@@ -9,25 +9,8 @@
           Level up your coding skills
         </p>
       </div>
-      <div class="container card-list">
-        <div class="box" v-for="course in recentCourses" :key="course.id">
-          <article class="media">
-            <div class="media-left">
-              <figure class="image is-64x64">
-                <img :src="`/img/${course.img}`" alt="Image" />
-              </figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>{{ course.title }}</strong>
-                  <br />
-                  <small>{{ course.lessons }} lessons</small>
-                </p>
-              </div>
-            </div>
-          </article>
-        </div>
+      <div class="container">
+        <AppCardList :items="recentCourses" />
       </div>
     </div>
   </section>
@@ -35,15 +18,21 @@
 
 <script>
 import { mapState } from "vuex";
+import AppCardList from "@/components/AppCardList.vue";
 
 export default {
+  components: {
+    AppCardList
+  },
   computed: {
     ...mapState(["courses", "subjects"]),
     recentCourses() {
       return this.courses.map(course => {
         return {
           ...course,
-          subject: { ...this.subjects.find(sub => sub.id === course.subject) }
+          subject: { ...this.subjects.find(sub => sub.id === course.subject) },
+          subtitle: `${course.lessons} lessons`,
+          tags: ["New!"]
         };
       });
     }
