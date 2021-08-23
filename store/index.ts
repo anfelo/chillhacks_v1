@@ -40,5 +40,6 @@ export const actions = {
     } catch (error) {
       console.log(error);
     }
-  }
+  },
+  async getCourseData({ state, commit }) {}
 };

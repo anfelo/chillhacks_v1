@@ -62,6 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~assets/styles/theme.scss";
+
 .section-divider-shape {
   width: 100%;
   overflow: hidden;
@@ -79,7 +81,7 @@ export default {
   height: 152px;
 }
 
-.section-divider-shape .shape-fill {
-  fill: #6272a4;
+.section-divider-shape.is-info .shape-fill {
+  fill: $info;
 }
 </style>

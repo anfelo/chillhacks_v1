@@ -56,6 +56,10 @@ blockquote {
   font-style: italic;
 }
 
+hr {
+  background-color: $light-grey;
+}
+
 .card-body p {
   color: var(--h-color) !important;
 }
