@@ -1,29 +1,31 @@
 <template>
   <div :class="`column ${size}`">
-    <div class="box">
-      <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img :src="`/img/${item.img}`" alt="Image" />
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <strong>{{ item.title }}</strong>
-              <br />
-              <small>{{ item.subtitle }}</small>
-              <br />
-            </p>
+    <nuxt-link :to="item.url">
+      <div class="box">
+        <article class="media">
+          <div class="media-left">
+            <figure class="image is-64x64">
+              <img :src="`/img/${item.img}`" alt="Image" />
+            </figure>
           </div>
-        </div>
-        <div class="media-right">
-          <div v-for="tag in item.tags" :key="tag" class="tags">
-            <span class="tag is-success">{{ tag }}</span>
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <strong>{{ item.title }}</strong>
+                <br />
+                <small>{{ item.subtitle }}</small>
+                <br />
+              </p>
+            </div>
           </div>
-        </div>
-      </article>
-    </div>
+          <div class="media-right">
+            <div v-for="tag in item.tags" :key="tag" class="tags">
+              <span class="tag is-success">{{ tag }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </nuxt-link>
   </div>
 </template>
 

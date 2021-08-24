@@ -9,120 +9,52 @@
             <div class="box">
               <div class="section-title">
                 <figure class="image is-32x32">
-                  <img :src="`/img/software-fundamentals.svg`" alt="Image" />
+                  <img :src="`/img/${currentCourse.img}`" alt="Image" />
                 </figure>
-                <h1 class="title">Design Patterns</h1>
+                <h1 class="title">{{ currentCourse.title }}</h1>
               </div>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Deserunt debitis, natus mollitia eum asperiores, dignissimos et
-                reiciendis laboriosam fugiat repellendus nulla saepe distinctio
-                atque voluptatem, alias perferendis assumenda facere
-                voluptatibus!
+                {{ currentCourse.description }}
               </p>
-              <AppCourseProgress progressText="14/42" progressPercentage="60" />
+              <AppCourseProgress
+                :progressText="`0/${currentCourse.lessonsCount}`"
+                :progressPercentage="0"
+              />
             </div>
 
-            <div class="box">
-              <h3 class="is-size-4">Behavioral Patterns</h3>
-              <small>5 lessons</small>
-              <ul>
-                <li>
-                  <div class="lesson has-progress done">
-                    <div class="lesson-bullet has-background-primary"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet has-background-primary"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-              </ul>
-              <hr />
-              <h3 class="is-size-4">Behavioral Patterns</h3>
-              <small>5 lessons</small>
-              <ul>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson has-progress">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="lesson">
-                    <div class="lesson-bullet"></div>
-                    <p>
-                      Chain of Responsibility <br />
-                      <small>07:30</small>
-                    </p>
-                  </div>
-                </li>
-              </ul>
+            <div class="box" v-if="lessonsByCategory.length">
+              <div
+                v-for="(category, catIndex) in lessonsByCategory"
+                :key="category.id"
+              >
+                <h3 class="is-size-4">{{ category.id }}</h3>
+                <small>{{ `${category.lessons.length} lessons` }}</small>
+                <ul class="lessons-list">
+                  <li
+                    v-for="(lesson, index) in category.lessons"
+                    :key="lesson.slug"
+                  >
+                    <nuxt-link :to="`/courses/${slug}/${lesson.slug}`">
+                      <div
+                        :class="
+                          `lesson ${
+                            index < category.lessons.length - 1
+                              ? 'has-progress'
+                              : ''
+                          }`
+                        "
+                      >
+                        <div class="lesson-bullet"></div>
+                        <p>
+                          {{ lesson.title }} <br />
+                          <small>{{ lesson.duration }}</small>
+                        </p>
+                      </div>
+                    </nuxt-link>
+                  </li>
+                </ul>
+                <hr v-if="catIndex < lessonsByCategory.length - 1" />
+              </div>
             </div>
           </div>
         </div>
@@ -132,6 +64,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AppCourseProgress from "@/components/AppCourseProgress.vue";
 import AppSectionDivider from "@/components/AppSectionDivider.vue";
 
@@ -144,6 +77,23 @@ export default {
     const slug = params.slug;
     await store.dispatch("getCourseData", slug);
     return { slug };
+  },
+  computed: {
+    ...mapState(["currentCourse"]),
+    lessonsByCategory() {
+      const categories = this.currentCourse.lessons.map(
+        lesson => lesson.category
+      );
+      const categoriesSet = new Set(categories);
+      return [...categoriesSet].map(category => {
+        return {
+          id: category,
+          lessons: this.currentCourse.lessons.filter(
+            less => less.category === category
+          )
+        };
+      });
+    }
   }
 };
 </script>
@@ -169,12 +119,24 @@ body.dark-theme {
   }
 }
 
+.lessons-list {
+  margin-top: 10px;
+}
+
 .lesson {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  line-height: 1.2;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.lesson:hover {
+  color: $primary;
 }
 
 .lesson.has-progress:before {

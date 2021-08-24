@@ -41,7 +41,8 @@ export default {
         ).length;
         return {
           ...this.subjects.find(sub => sub.id === subject),
-          subtitle: `${coursesCount} courses`
+          subtitle: `${coursesCount} courses`,
+          url: `/courses?subject=${subject}`
         };
       });
     }

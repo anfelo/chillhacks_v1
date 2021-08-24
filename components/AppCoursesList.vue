@@ -58,8 +58,9 @@ export default {
         return {
           ...course,
           subject: { ...this.subjects.find(sub => sub.id === course.subject) },
-          subtitle: `${course.lessons} lessons`,
-          tags: ["New!"]
+          subtitle: `${course.lessonsCount} lessons`,
+          tags: ["New!"],
+          url: `/courses/${course.slug}`
         };
       });
     }

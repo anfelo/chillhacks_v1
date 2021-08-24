@@ -3,7 +3,8 @@ import * as fromApi from "@/services/api";
 export const state = () => ({
   appTheme: "dark-theme",
   courses: [],
-  subjects: []
+  subjects: [],
+  currentCourse: {}
 });
 
 export const mutations = {
@@ -15,6 +16,9 @@ export const mutations = {
   },
   updateCourses: (state, payload) => {
     state.courses = payload;
+  },
+  updateCurrentCourse: (state, payload) => {
+    state.currentCourse = payload;
   }
 };
 
@@ -41,5 +45,15 @@ export const actions = {
       console.log(error);
     }
   },
-  async getCourseData({ state, commit }) {}
+  async getCourseData({ state, commit }, payload) {
+    if (state.currentCourse.slug === payload) return;
+    try {
+      const res = await fromApi.getCourse(payload);
+      if (res.status === 200) {
+        commit("updateCurrentCourse", res.body);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
