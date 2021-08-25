@@ -68,3 +68,10 @@ export async function getCourse(
     }
   };
 }
+
+export async function getLesson({
+  course,
+  lesson
+}): Promise<{ status: number; body: any }> {
+  return getDocument(`courses/${course}/lessons`, lesson);
+}

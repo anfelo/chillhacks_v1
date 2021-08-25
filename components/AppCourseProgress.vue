@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .course-progress {
-  margin: 20px 0;
+  margin: 0;
 }
 .course-progress-text {
   display: flex;

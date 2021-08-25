@@ -186,6 +186,28 @@ body.dark-theme {
     color: var(--text-color);
   }
 
+  .menu {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+
+    .menu-list a {
+      color: var(--text-color);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: var(--card-bg);
+        color: $primary;
+      }
+    }
+
+    .menu-label {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      color: $success;
+      font-weight: bold;
+    }
+  }
+
   .tabs {
     li:not(.is-active) a {
       color: var(--text-color);
@@ -305,4 +327,8 @@ body.dark-theme {
 
 .tag {
   border-bottom: 3px solid $jungle-green;
+}
+
+.menu-list a {
+  padding: 0 0.75em;
 }

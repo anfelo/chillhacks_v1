@@ -16,10 +16,12 @@
               <p>
                 {{ currentCourse.description }}
               </p>
-              <AppCourseProgress
-                :progressText="`0/${currentCourse.lessonsCount}`"
-                :progressPercentage="0"
-              />
+              <div class="section-progress">
+                <AppCourseProgress
+                  :progressText="`0/${currentCourse.lessonsCount}`"
+                  :progressPercentage="0"
+                />
+              </div>
             </div>
 
             <div class="box" v-if="lessonsByCategory.length">
@@ -29,30 +31,7 @@
               >
                 <h3 class="is-size-4">{{ category.id }}</h3>
                 <small>{{ `${category.lessons.length} lessons` }}</small>
-                <ul class="lessons-list">
-                  <li
-                    v-for="(lesson, index) in category.lessons"
-                    :key="lesson.slug"
-                  >
-                    <nuxt-link :to="`/courses/${slug}/${lesson.slug}`">
-                      <div
-                        :class="
-                          `lesson ${
-                            index < category.lessons.length - 1
-                              ? 'has-progress'
-                              : ''
-                          }`
-                        "
-                      >
-                        <div class="lesson-bullet"></div>
-                        <p>
-                          {{ lesson.title }} <br />
-                          <small>{{ lesson.duration }}</small>
-                        </p>
-                      </div>
-                    </nuxt-link>
-                  </li>
-                </ul>
+                <AppLessonsList :lessons="category.lessons" :course="slug" />
                 <hr v-if="catIndex < lessonsByCategory.length - 1" />
               </div>
             </div>
@@ -67,11 +46,13 @@
 import { mapState } from "vuex";
 import AppCourseProgress from "@/components/AppCourseProgress.vue";
 import AppSectionDivider from "@/components/AppSectionDivider.vue";
+import AppLessonsList from "@/components/AppLessonsList.vue";
 
 export default {
   components: {
     AppCourseProgress,
-    AppSectionDivider
+    AppSectionDivider,
+    AppLessonsList
   },
   async asyncData({ params, store }) {
     const slug = params.slug;
@@ -119,48 +100,7 @@ body.dark-theme {
   }
 }
 
-.lessons-list {
-  margin-top: 10px;
-}
-
-.lesson {
-  margin-bottom: 20px;
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  line-height: 1.2;
-  color: var(--text-color);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.lesson:hover {
-  color: $primary;
-}
-
-.lesson.has-progress:before {
-  content: "";
-  position: absolute;
-  top: 25px;
-  left: 6px;
-  height: 45px;
-  width: 3px;
-  background-color: $light-grey;
-}
-
-.lesson.done {
-  &:before {
-    background-color: $primary;
-  }
-}
-
-.lesson-bullet {
-  margin-right: 7px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: $light-grey;
-  z-index: 1;
+.course-progress {
+  margin: 20px 0;
 }
 </style>
