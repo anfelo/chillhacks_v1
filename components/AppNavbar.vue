@@ -1,59 +1,61 @@
 <template>
-  <div class="container">
-    <nav
-      :class="`navbar ${isDark ? 'is-dark' : ''}`"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <nuxt-link class="navbar-item" to="/">
-          <span>chillhacks</span>
-        </nuxt-link>
+  <nav
+    :class="`navbar ${isDark ? 'is-dark' : ''}`"
+    role="navigation"
+    aria-label="main navigation"
+  >
+    <div class="navbar-brand">
+      <nuxt-link v-if="layout === 'default'" class="navbar-item" to="/">
+        <span>chillhacks</span>
+      </nuxt-link>
 
-        <span
-          role="button"
-          :class="`navbar-burger burger ${isNavbarOpen ? 'is-active' : ''}`"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="mainNavbar"
-          @click="handleBurgerClick"
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </span>
-      </div>
-
-      <div
-        id="mainNavbar"
-        :class="`navbar-menu ${isNavbarOpen ? 'is-active' : ''}`"
+      <span
+        role="button"
+        :class="`navbar-burger burger ${isNavbarOpen ? 'is-active' : ''}`"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="mainNavbar"
+        @click="handleBurgerClick"
       >
-        <div class="navbar-end">
-          <nuxt-link class="navbar-item" to="/courses">
-            Courses
-          </nuxt-link>
-          <nuxt-link class="navbar-item" to="/login">
-            Login
-          </nuxt-link>
-          <div class="navbar-toggle">
-            <AppToggleSwitch
-              :checked="isDark"
-              :isThemeToggle="true"
-              @change="handleThemeChange"
-            />
-          </div>
-          <div class="navbar-item has-dropdown is-hoverable"></div>
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </span>
+    </div>
+
+    <div
+      id="mainNavbar"
+      :class="`navbar-menu ${isNavbarOpen ? 'is-active' : ''}`"
+    >
+      <div class="navbar-end">
+        <nuxt-link class="navbar-item" to="/courses">
+          Courses
+        </nuxt-link>
+        <nuxt-link class="navbar-item" to="/login">
+          Login
+        </nuxt-link>
+        <div class="navbar-toggle">
+          <AppToggleSwitch
+            :checked="isDark"
+            :isThemeToggle="true"
+            @change="handleThemeChange"
+          />
         </div>
+        <div class="navbar-item has-dropdown is-hoverable"></div>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <script>
 import AppToggleSwitch from "@/components/AppToggleSwitch.vue";
 export default {
   props: {
-    isDark: Boolean
+    isDark: Boolean,
+    layout: {
+      type: String,
+      default: "default"
+    }
   },
   components: {
     AppToggleSwitch

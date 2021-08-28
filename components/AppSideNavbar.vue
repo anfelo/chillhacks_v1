@@ -4,6 +4,11 @@
       <nuxt-link to="/">
         <span>chillhacks</span>
       </nuxt-link>
+      <button class="menu-close-button" @click="$emit('close', true)">
+        <span class="icon is-small">
+          <i class="fas fa-arrow-left"></i>
+        </span>
+      </button>
     </div>
     <div class="menu-item">
       <AppCourseProgress
@@ -66,6 +71,8 @@ export default {
 }
 
 .menu-header {
+  display: flex;
+  justify-content: space-between;
   padding: 1rem 0.75rem;
   border-bottom: 2px solid $light-grey;
 }
@@ -77,5 +84,20 @@ export default {
 
 .menu-item:not(:last-child) {
   margin-bottom: 1em;
+}
+
+.menu-close-button {
+  background-color: rgba($color: $dark, $alpha: 0.8);
+  color: $white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba($color: $dark, $alpha: 1);
+  }
 }
 </style>

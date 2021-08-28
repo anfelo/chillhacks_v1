@@ -1,5 +1,6 @@
 @import "./theme.scss";
 @import "/node_modules/bulma/bulma.sass";
+@import "/node_modules/highlight.js/scss/night-owl.scss";
 
 body {
   min-height: 100vh;
@@ -16,7 +17,7 @@ body.dark-theme {
   --btn-color: #f8f8f2;
   --btn-border: #f8f8f2;
   --btn-shadow: #f8f8f2;
-  --code-bg: #6272a4;
+  --code-bg: #1c1e27;
   --code-text-color: #f8f8f2;
   --card-bg: #44475a;
   --card-active-bg: #45535e;
@@ -30,7 +31,7 @@ body.light-theme {
   --btn-color: #282a36;
   --btn-border: #282a36;
   --btn-shadow: #282a36;
-  --code-bg: #6272a4;
+  --code-bg: #1c1e27;
   --code-text-color: #f8f8f2;
   --card-bg: #38444d;
 }
@@ -140,22 +141,22 @@ pre {
 
 /* Blog
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.article-content h3 {
+.lesson-content h3 {
   font-size: 1.4em;
   margin-bottom: 10px;
   margin-top: 15px;
 }
 
-.article-content p {
+.lesson-content p {
   margin-bottom: 15px;
 }
 
-.article-content ul {
+.lesson-content ul {
   list-style: disc;
   padding-left: 40px;
 }
 
-.article-content ol {
+.lesson-content ol {
   padding-left: 40px;
 }
 

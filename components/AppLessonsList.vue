@@ -78,4 +78,13 @@ export default {
   background-color: $light-grey;
   z-index: 1;
 }
+
+.nuxt-link-exact-active {
+  .lesson-bullet {
+    background-color: $primary;
+    box-shadow: 0 0 4px $white;
+    width: 16px;
+    height: 16px;
+  }
+}
 </style>

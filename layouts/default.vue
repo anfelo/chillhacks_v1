@@ -1,6 +1,8 @@
 <template>
   <div>
-    <AppNavbar :isDark="appTheme === 'dark-theme'" />
+    <div class="container">
+      <AppNavbar :isDark="appTheme === 'dark-theme'" />
+    </div>
     <main :class="appTheme === 'dark-theme' ? 'has-background-dark' : ''">
       <Nuxt />
     </main>

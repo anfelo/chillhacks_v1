@@ -25,7 +25,10 @@ async function getCollection(
   };
 }
 
-async function getDocument(path: string, id: string) {
+async function getDocument(
+  path: string,
+  id: string
+): Promise<{ status: number; body: any }> {
   const docRef = db.collection(path).doc(id);
   const doc = await docRef.get();
   const data = doc.data();
@@ -73,5 +76,22 @@ export async function getLesson({
   course,
   lesson
 }): Promise<{ status: number; body: any }> {
-  return getDocument(`courses/${course}/lessons`, lesson);
+  const res = await getDocument(`courses/${course}/lessons`, lesson);
+  if (res.body.slug) {
+    const storageRef = storage.ref(`courses/${course}/${res.body.slug}.md`);
+    const contentUrl = await storageRef.getDownloadURL();
+    const contentRes = await fetch(contentUrl);
+    const contentString = await streamToString(contentRes.body);
+    res.body.content = contentString;
+  }
+  return res;
+}
+
+function streamToString(stream): Promise<string> {
+  const chunks: any[] = [];
+  return new Promise((resolve, reject) => {
+    stream.on("data", chunk => chunks.push(Buffer.from(chunk)));
+    stream.on("error", err => reject(err));
+    stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+  });
 }
