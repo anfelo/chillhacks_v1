@@ -1,16 +1,10 @@
 <template>
   <div class="course-container">
     <div :class="`sidenav-container ${isSidebarOpen ? 'opened' : 'collapsed'}`">
-      <AppSideNavbar @close="handleSidebarToggle" />
-      <button
-        v-if="!isSidebarOpen"
-        class="sidenav-open-button"
-        @click="handleSidebarToggle"
-      >
-        <span class="icon is-small">
-          <i class="fas fa-arrow-right"></i>
-        </span>
-      </button>
+      <AppSideNavbar
+        @toggle="handleSidebarToggle"
+        :isSidebarOpen="isSidebarOpen"
+      />
     </div>
     <main
       :class="
@@ -66,7 +60,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/styles/theme.scss";
 .course-container {
   display: flex;
 }
@@ -86,25 +79,6 @@ export default {
 
   &.opened {
     left: 0;
-  }
-}
-
-.sidenav-open-button {
-  position: fixed;
-  top: 15px;
-  left: 0;
-  background-color: darken($dark, 5%);
-  color: $white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
-  transition: all 0.2s;
-
-  &:hover {
-    background-color: rgba($color: $dark, $alpha: 1);
   }
 }
 
