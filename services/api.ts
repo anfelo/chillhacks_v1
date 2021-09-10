@@ -49,7 +49,7 @@ async function getDocument(
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
   try {
-    const res = await axios('http://chillhacks.io/api/courses');
+    const res = await axios('http://chillhacks.com/api/courses');
     return {
       status: 200,
       body: res.data
@@ -61,7 +61,7 @@ export async function getCourses(): Promise<{ status: number; body: any }> {
 
 export async function getSubjects(): Promise<{ status: number; body: any }> {
   try {
-    const res = await axios('http://chillhacks.io/api/subjects');
+    const res = await axios('http://chillhacks.com/api/subjects');
     return {
       status: 200,
       body: res.data
@@ -75,8 +75,8 @@ export async function getCourse(
   id: string
 ): Promise<{ status: number; body: any }> {
   try {
-    const courseRes = await axios(`http://chillhacks.io/api/courses/${id}`);
-    const lessonsRes = await axios(`http://chillhacks.io/api/courses/${id}/lessons`);
+    const courseRes = await axios(`http://chillhacks.com/api/courses/${id}`);
+    const lessonsRes = await axios(`http://chillhacks.com/api/courses/${id}/lessons`);
     if (courseRes.data) {
       return {
         status: 200,
