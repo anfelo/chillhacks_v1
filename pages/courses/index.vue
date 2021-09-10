@@ -15,7 +15,7 @@
       :theme="`${isDark ? 'is-dark' : ''}`"
       :filterby="subject.id"
       :title="subject.title"
-      :img="subject.img"
+      :img="subject.img_url"
     />
   </div>
 </template>

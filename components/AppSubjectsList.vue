@@ -33,11 +33,11 @@ export default {
   computed: {
     ...mapState(["courses", "subjects"]),
     coursesBySubject() {
-      const subjects = this.courses.map(course => course.subject);
+      const subjects = this.courses.map(course => course.subject_id);
       const subjectsSet = new Set(subjects);
       return [...subjectsSet].map(subject => {
         const coursesCount = this.courses.filter(
-          course => course.subject === subject
+          course => course.subject_id === subject
         ).length;
         return {
           ...this.subjects.find(sub => sub.id === subject),

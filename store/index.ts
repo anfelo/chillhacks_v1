@@ -32,7 +32,7 @@ export const actions = {
     try {
       const res = await fromApi.getSubjects();
       if (res.status === 200) {
-        commit("updateSubjects", res.body);
+        commit("updateSubjects", res.body.results ? res.body.results : []);
       }
     } catch (error) {
       console.log(error);
@@ -43,7 +43,7 @@ export const actions = {
     try {
       const res = await fromApi.getCourses();
       if (res.status === 200) {
-        commit("updateCourses", res.body);
+        commit("updateCourses", res.body.results ? res.body.results : []);
       }
     } catch (error) {
       console.log(error);

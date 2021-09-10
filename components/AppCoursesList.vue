@@ -57,8 +57,8 @@ export default {
       return this.courses.map(course => {
         return {
           ...course,
-          subject: { ...this.subjects.find(sub => sub.id === course.subject) },
-          subtitle: `${course.lessonsCount} lessons`,
+          subject: { ...this.subjects.find(sub => sub.id === course.subject_id) },
+          subtitle: `${course.lessons_count} lessons`,
           tags: ["New!"],
           url: `/courses/${course.slug}`
         };

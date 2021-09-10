@@ -1,4 +1,5 @@
 import { db, storage } from "./firebase";
+import axios from 'axios';
 
 async function getCollection(
   path: string,
@@ -47,29 +48,48 @@ async function getDocument(
 }
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
-  return getCollection("courses");
+  try {
+    const res = await axios('http://chillhacks.io/api/courses');
+    return {
+      status: 200,
+      body: res.data
+    };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
 }
 
 export async function getSubjects(): Promise<{ status: number; body: any }> {
-  return getCollection("subjects");
+  try {
+    const res = await axios('http://chillhacks.io/api/subjects');
+    return {
+      status: 200,
+      body: res.data
+    };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
 }
 
 export async function getCourse(
   id: string
 ): Promise<{ status: number; body: any }> {
-  const courseRes = await getDocument("courses", id);
-  if (courseRes.status === 400) return courseRes;
-  const lessonsRes = await getCollection(`courses/${id}/lessons`, {
-    key: "order",
-    direction: "asc"
-  });
-  return {
-    ...courseRes,
-    body: {
-      ...courseRes.body,
-      lessons: lessonsRes.body
+  try {
+    const courseRes = await axios(`http://chillhacks.io/api/courses/${id}`);
+    const lessonsRes = await axios(`http://chillhacks.io/api/courses/${id}/lessons`);
+    if (courseRes.data) {
+      return {
+        status: 200,
+        body: {
+          ...courseRes.data,
+          lessons: lessonsRes.data
+        }
+      };
     }
-  };
+    return { status: 400, body: {} };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
 }
 
 export async function getLesson({

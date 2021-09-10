@@ -5,7 +5,7 @@
         <article class="media">
           <div class="media-left">
             <figure class="image is-64x64">
-              <img :src="`/img/${item.img}`" alt="Image" />
+              <img :src="`/img/${item.img_url}`" alt="Image" />
             </figure>
           </div>
           <div class="media-content">
