@@ -2,7 +2,7 @@ import { db, storage } from "./firebase";
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: process.env.baseUrl,
+  baseURL: "http://www.chillhacks.com/api",
 });
 
 async function getDocument(
