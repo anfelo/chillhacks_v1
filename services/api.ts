@@ -2,7 +2,7 @@ import { db, storage } from "./firebase";
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: 'http://www.chillhacks.com/api',
+  baseURL: process.env.baseUrl,
 });
 
 async function getDocument(
@@ -28,7 +28,7 @@ async function getDocument(
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
   try {
-    const res = await client.get('/courses')
+    const res = await client.get('/api/courses')
     return {
       status: 200,
       body: res.data
@@ -41,7 +41,7 @@ export async function getCourses(): Promise<{ status: number; body: any }> {
 
 export async function getSubjects(): Promise<{ status: number; body: any }> {
   try {
-    const res = await client.get('/subjects');
+    const res = await client.get('/api/subjects');
     return {
       status: 200,
       body: res.data

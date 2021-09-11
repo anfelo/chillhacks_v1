@@ -57,5 +57,9 @@ export default {
 
   loading: {
     color: "#bd93f9"
+  },
+
+  env: {
+    baseUrl: process.env.PLATFORM_BASE_URL
   }
 };
