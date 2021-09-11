@@ -2,7 +2,7 @@ import { db, storage } from "./firebase";
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: process.env.baseUrl,
+  baseURL: `${process.env.baseUrl}/api`,
 });
 
 async function getDocument(
@@ -28,7 +28,7 @@ async function getDocument(
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
   try {
-    const res = await client.get('/api/courses')
+    const res = await client.get('/courses')
     return {
       status: 200,
       body: res.data
@@ -41,7 +41,7 @@ export async function getCourses(): Promise<{ status: number; body: any }> {
 
 export async function getSubjects(): Promise<{ status: number; body: any }> {
   try {
-    const res = await client.get('/api/subjects');
+    const res = await client.get('/subjects');
     return {
       status: 200,
       body: res.data
