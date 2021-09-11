@@ -1,30 +1,9 @@
 import { db, storage } from "./firebase";
 import axios from 'axios';
 
-async function getCollection(
-  path: string,
-  sortBy?: { key: string; direction: "desc" | "asc" }
-): Promise<{ status: number; body: any }> {
-  const colRef = db.collection(path);
-  let queryRef;
-  if (sortBy) {
-    queryRef = colRef.orderBy(sortBy.key, sortBy.direction);
-  }
-  const querySnapshot = queryRef ? await queryRef.get() : await colRef.get();
-  const colData: any[] = [];
-
-  querySnapshot.forEach(doc => {
-    colData.push({
-      id: doc.id,
-      ...doc.data()
-    });
-  });
-
-  return {
-    status: 200,
-    body: [...colData]
-  };
-}
+const client = axios.create({
+  baseURL: 'http://www.chillhacks.com/api',
+});
 
 async function getDocument(
   path: string,
@@ -49,19 +28,20 @@ async function getDocument(
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
   try {
-    const res = await axios('http://chillhacks.com/api/courses');
+    const res = await client.get('/courses')
     return {
       status: 200,
       body: res.data
     };
   } catch (error) {
+    console.log(error);
     return { status: 400, body: {} };
   }
 }
 
 export async function getSubjects(): Promise<{ status: number; body: any }> {
   try {
-    const res = await axios('http://chillhacks.com/api/subjects');
+    const res = await client.get('/subjects');
     return {
       status: 200,
       body: res.data
