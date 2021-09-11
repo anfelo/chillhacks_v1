@@ -23,5 +23,6 @@ export default {
 .card-list {
   padding-top: 20px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 </style>
