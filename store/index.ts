@@ -32,7 +32,7 @@ export const actions = {
     try {
       const res = await fromApi.getSubjects();
       if (res.status === 200) {
-        commit("updateSubjects", res.body.results ? res.body.results : []);
+        commit("updateSubjects", res.body);
       }
     } catch (error) {
       console.log(error);
@@ -43,18 +43,24 @@ export const actions = {
     try {
       const res = await fromApi.getCourses();
       if (res.status === 200) {
-        commit("updateCourses", res.body.results ? res.body.results : []);
+        commit("updateCourses", res.body);
       }
     } catch (error) {
       console.log(error);
     }
   },
-  async getCourseData({ state, commit }, payload) {
+  async getCourseData({ state, commit, dispatch }, payload) {
     if (state.currentCourse.slug === payload) return;
+    if (!state.courses || !state.courses.length) {
+      await dispatch("getCoursesData");
+    }
     try {
-      const res = await fromApi.getCourse(payload);
-      if (res.status === 200) {
-        commit("updateCurrentCourse", res.body);
+      const course = state.courses.find(course => course.slug === payload);
+      if (course) {
+        const res = await fromApi.getCourse(course.id);
+        if (res.status === 200) {
+          commit("updateCurrentCourse", res.body);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -66,7 +72,11 @@ export const actions = {
       await dispatch("getCourseData", payload.course);
     }
     try {
-      const res = await fromApi.getLesson(payload);
+      const courseID = state.currentCourse.id;
+      const lessonID = state.currentCourse.lessons.find(
+        lesson => lesson.slug === payload.lesson
+      ).id;
+      const res = await fromApi.getLesson({ courseID, lessonID });
       if (res.status === 200) {
         commit("updateCurrentLesson", res.body);
       }

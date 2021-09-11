@@ -57,7 +57,7 @@ export default {
 .lesson.has-progress:before {
   content: "";
   position: absolute;
-  top: 25px;
+  top: 7.5px;
   left: 6px;
   height: 45px;
   width: 3px;

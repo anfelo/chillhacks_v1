@@ -9,7 +9,7 @@
             <div class="box">
               <div class="section-title">
                 <figure class="image is-32x32">
-                  <img :src="`/img/${currentCourse.img}`" alt="Image" />
+                  <img :src="`/img/${currentCourse.img_url}`" alt="Image" />
                 </figure>
                 <h1 class="title">{{ currentCourse.title }}</h1>
               </div>
@@ -18,7 +18,7 @@
               </p>
               <div class="section-progress">
                 <AppCourseProgress
-                  :progressText="`0/${currentCourse.lessonsCount}`"
+                  :progressText="`0/${currentCourse.lessons_count}`"
                   :progressPercentage="0"
                 />
               </div>
@@ -29,7 +29,7 @@
                 v-for="(category, catIndex) in lessonsByCategory"
                 :key="category.id"
               >
-                <h3 class="is-size-4">{{ category.id }}</h3>
+                <h3 class="is-size-4">{{ category.title }}</h3>
                 <small>{{ `${category.lessons.length} lessons` }}</small>
                 <AppLessonsList :lessons="category.lessons" :course="slug" />
                 <hr v-if="catIndex < lessonsByCategory.length - 1" />
@@ -69,11 +69,20 @@ export default {
       return [...categoriesSet].map(category => {
         return {
           id: category,
+          title: this.slugToTitleCase(category),
           lessons: this.currentCourse.lessons.filter(
             less => less.category === category
           )
         };
       });
+    }
+  },
+  methods: {
+    slugToTitleCase(str) {
+      return str
+        .split("-")
+        .map(word => word[0].toUpperCase() + word.slice(1))
+        .join(" ");
     }
   }
 };

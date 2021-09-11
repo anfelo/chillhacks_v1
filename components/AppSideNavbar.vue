@@ -12,13 +12,13 @@
     </div>
     <div class="menu-item">
       <AppCourseProgress
-        :progressText="`0/${currentCourse.lessonsCount}`"
+        :progressText="`0/${currentCourse.lessons_count}`"
         :progressPercentage="0"
       />
     </div>
     <div v-for="(category, catIndex) in lessonsByCategory" :key="category.id">
       <p class="menu-label">
-        {{ category.id }}
+        {{ category.title }}
         <br />
         <small>{{ `${category.lessons.length} lessons` }}</small>
       </p>
@@ -68,6 +68,7 @@ export default {
       return [...categoriesSet].map(category => {
         return {
           id: category,
+          title: category.replace("-", " "),
           lessons: this.currentCourse.lessons.filter(
             less => less.category === category
           )
