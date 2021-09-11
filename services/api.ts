@@ -2,7 +2,7 @@ import { db, storage } from "./firebase";
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: `${process.env.baseUrl}/api`,
+  baseURL: `${process.env.baseUrl}`,
 });
 
 async function getDocument(
