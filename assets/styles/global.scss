@@ -33,7 +33,7 @@ body.light-theme {
   --btn-shadow: #282a36;
   --code-bg: #1c1e27;
   --code-text-color: #f8f8f2;
-  --card-bg: #38444d;
+  --card-bg: #616580;
 }
 
 h1,
@@ -199,13 +199,6 @@ body.dark-theme {
         background-color: var(--card-bg);
         color: $primary;
       }
-    }
-
-    .menu-label {
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      color: $success;
-      font-weight: bold;
     }
   }
 

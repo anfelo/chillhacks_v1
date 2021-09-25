@@ -72,11 +72,11 @@ export const actions = {
       await dispatch("getCourseData", payload.course);
     }
     try {
-      const courseID = state.currentCourse.id;
-      const lessonID = state.currentCourse.lessons.find(
+      const course = state.currentCourse.id;
+      const lesson = state.currentCourse.lessons.find(
         lesson => lesson.slug === payload.lesson
       ).id;
-      const res = await fromApi.getLesson({ courseID, lessonID });
+      const res = await fromApi.getLesson({ course, lesson });
       if (res.status === 200) {
         commit("updateCurrentLesson", res.body);
       }

@@ -12,7 +12,7 @@
     </div>
     <div class="menu-item">
       <AppCourseProgress
-        :progressText="`0/${currentCourse.lessons_count}`"
+        :progressText="`0/${currentCourse.lessonsCount}`"
         :progressPercentage="0"
       />
     </div>
@@ -84,6 +84,13 @@ export default {
 
 .menu {
   height: 100%;
+}
+
+.menu-label {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  color: $success;
+  font-weight: bold;
 }
 
 .menu-header {

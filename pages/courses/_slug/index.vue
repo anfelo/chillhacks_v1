@@ -9,7 +9,7 @@
             <div class="box">
               <div class="section-title">
                 <figure class="image is-32x32">
-                  <img :src="`/img/${currentCourse.img_url}`" alt="Image" />
+                  <img :src="`/img/${currentCourse.img}`" alt="Image" />
                 </figure>
                 <h1 class="title">{{ currentCourse.title }}</h1>
               </div>
@@ -18,7 +18,7 @@
               </p>
               <div class="section-progress">
                 <AppCourseProgress
-                  :progressText="`0/${currentCourse.lessons_count}`"
+                  :progressText="`0/${currentCourse.lessonsCount}`"
                   :progressPercentage="0"
                 />
               </div>

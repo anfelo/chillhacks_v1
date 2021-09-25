@@ -33,4 +33,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+@media (min-width: 1024px) {
+  pre {
+    max-width: 70%;
+  }
+}
+</style>

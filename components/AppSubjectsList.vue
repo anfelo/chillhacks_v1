@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapState(["courses", "subjects"]),
     coursesBySubject() {
-      const subjects = this.courses.map(course => course.subject_id);
+      const subjects = this.courses.map(course => course.subject);
       const subjectsSet = new Set(subjects);
       return [...subjectsSet].map(subject => {
         const coursesCount = this.courses.filter(
