@@ -27,7 +27,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(["appTheme"])
+    ...mapState(["appTheme"]),
+    ...mapState("auth", ["currentUser"])
   },
   watch: {
     appTheme: function(value) {

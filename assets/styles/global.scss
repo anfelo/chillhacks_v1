@@ -163,7 +163,12 @@ pre {
 body.dark-theme {
   .title,
   .subtitle,
+  .label,
   strong {
+    color: var(--text-color);
+  }
+
+  .checkbox:hover {
     color: var(--text-color);
   }
 }
