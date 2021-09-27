@@ -1,6 +1,12 @@
 <template>
   <div class="card-list columns">
-    <AppCard v-for="item in items" :key="item.id" :item="item" size="is-4" />
+    <AppCard
+      v-for="item in items"
+      :key="item.id"
+      :item="item"
+      :isAdmin="true"
+      size="is-3"
+    />
     <div v-if="!items || !items.length">No items added yet 😑...</div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div :class="`column ${size}`">
-    <nuxt-link :to="item.url">
+    <nuxt-link v-if="item.url" :to="item.url">
       <div class="box">
         <article class="media">
           <div class="media-left">
@@ -10,10 +10,10 @@
           </div>
           <div class="media-content">
             <div class="content">
-              <p>
+              <p class="has-text-left">
                 <strong>{{ item.title }}</strong>
                 <br />
-                <small>{{ item.subtitle }}</small>
+                <small v-if="item.subtitle">{{ item.subtitle }}</small>
                 <br />
               </p>
             </div>
@@ -26,6 +26,30 @@
         </article>
       </div>
     </nuxt-link>
+    <div class="box" v-if="!item.url">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img :src="`/img/${item.img_url}`" alt="Image" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="has-text-left">
+              <strong>{{ item.title }}</strong>
+              <br />
+              <small v-if="item.subtitle">{{ item.subtitle }}</small>
+              <br />
+            </p>
+          </div>
+        </div>
+        <div class="media-right">
+          <div v-for="tag in item.tags" :key="tag" class="tags">
+            <span class="tag is-success">{{ tag }}</span>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 
@@ -39,6 +63,10 @@ export default {
     size: {
       type: String,
       default: ""
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   }
 };

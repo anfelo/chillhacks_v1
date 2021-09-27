@@ -5,7 +5,9 @@
         <h1 class="title">
           🧠 All Subjects
         </h1>
-        <AppCardList :items="subjects" />
+        <div class="box is-dark">
+          <AppSubjectsTable :subjects="subjects"></AppSubjectsTable>
+        </div>
         <button
           @click="e => updateSubjectModalActive(true)"
           class="button is-primary"

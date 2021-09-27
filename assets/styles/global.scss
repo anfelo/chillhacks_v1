@@ -237,6 +237,25 @@ body.dark-theme {
       color: var(--text-color);
     }
   }
+
+  .modal-card-head {
+    background-color: var(--card-bg);
+    border-color: var(--bg-color);
+    .modal-card-title {
+      color: var(--text-color);
+    }
+  }
+
+  .modal-card-body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .modal-card-foot {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--bg-color);
+  }
 }
 
 .navbar-link {
@@ -337,4 +356,15 @@ body.dark-theme {
 
 .menu-list a {
   padding: 0 0.75em;
+}
+
+.table {
+  &.is-dark {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+
+    thead th {
+      color: $primary;
+    }
+  }
 }
