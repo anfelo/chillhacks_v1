@@ -256,6 +256,15 @@ body.dark-theme {
     color: var(--text-color);
     border-color: var(--bg-color);
   }
+
+  .table {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+
+    thead th {
+      color: $primary;
+    }
+  }
 }
 
 .navbar-link {
@@ -356,15 +365,4 @@ body.dark-theme {
 
 .menu-list a {
   padding: 0 0.75em;
-}
-
-.table {
-  &.is-dark {
-    background-color: var(--card-bg);
-    color: var(--text-color);
-
-    thead th {
-      color: $primary;
-    }
-  }
 }

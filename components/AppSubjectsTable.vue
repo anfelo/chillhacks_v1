@@ -1,5 +1,5 @@
 <template>
-  <table class="table is-fullwidth is-dark">
+  <table class="table is-fullwidth">
     <thead>
       <tr>
         <th></th>
