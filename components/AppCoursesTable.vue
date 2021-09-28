@@ -3,8 +3,10 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>SubjectID</th>
         <th>Title</th>
         <th>Slug</th>
+        <th>Description</th>
         <th>Image</th>
         <th>Updated At</th>
         <th>Created At</th>
@@ -12,34 +14,48 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="subject in subjects" :key="subject.id">
+      <tr v-for="course in courses" :key="course.id">
         <td>
-          <abbr :title="subject.id">{{ getShortID(subject.id) }}</abbr>
+          <abbr :title="course.id">{{ getShortID(course.id) }}</abbr>
           <button
             class="button is-small"
-            @click="e => handleCopyToClipBoard(subject.id)"
+            @click="e => handleCopyToClipBoard(course.id)"
           >
             <span class="icon is-small">
               <i class="far fa-copy"></i>
             </span>
           </button>
         </td>
-        <td>{{ subject.title }}</td>
-        <td>{{ subject.slug }}</td>
+        <td>
+          <abbr :title="course.subject_id">{{
+            getShortID(course.subject_id)
+          }}</abbr>
+          <button
+            class="button is-small"
+            @click="e => handleCopyToClipBoard(course.subject_id)"
+          >
+            <span class="icon is-small">
+              <i class="far fa-copy"></i>
+            </span>
+          </button>
+        </td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.slug }}</td>
+        <td>{{ course.description | truncate(10) }}</td>
         <td>
           <figure class="image is-32x32">
-            <img :src="`/img/${subject.img_url}`" alt="Image" />
+            <img :src="`/img/${course.img_url}`" alt="Image" />
           </figure>
         </td>
-        <td>{{ formatDate(subject.updated) }}</td>
-        <td>{{ formatDate(subject.created) }}</td>
+        <td>{{ formatDate(course.updated) }}</td>
+        <td>{{ formatDate(course.created) }}</td>
         <td>
           <nav class="level">
             <div class="level-left">
               <div class="level-item">
                 <button
                   class="button is-info is-small"
-                  @click="e => editSubject(subject)"
+                  @click="e => editCourse(course)"
                 >
                   <span class="icon is-small">
                     <i class="fas fa-pencil-alt"></i>
@@ -67,10 +83,10 @@ import { getDateStringFromISOString } from "@/helpers/formatters";
 
 export default {
   props: {
-    subjects: Array
+    courses: Array
   },
   methods: {
-    ...mapActions("admin", ["editSubject"]),
+    ...mapActions("admin", ["editCourse"]),
     getShortID(id: string) {
       return id.slice(0, 8);
     },
@@ -79,6 +95,12 @@ export default {
     },
     formatDate(date: string) {
       return getDateStringFromISOString(date);
+    }
+  },
+  filters: {
+    truncate(value, length) {
+      if (!value) return "";
+      return value.slice(0, length) + "...";
     }
   }
 };

@@ -69,6 +69,25 @@ export async function getCourse(
   }
 }
 
+export async function updateOrCreateCourses(
+  course: any
+): Promise<{ status: number; body: any }> {
+  try {
+    let res;
+    if (course.id) {
+      res = await client.put(`/courses/${course.id}`, course);
+    } else {
+      res = await client.post(`/courses`, course);
+    }
+    return {
+      status: 200,
+      body: res.data ? res.data : {}
+    };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
+}
+
 export async function getLesson({
   courseID,
   lessonID
