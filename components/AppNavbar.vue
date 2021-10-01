@@ -31,8 +31,11 @@
         <nuxt-link class="navbar-item" to="/courses">
           Courses
         </nuxt-link>
-        <nuxt-link class="navbar-item" to="/login">
+        <nuxt-link v-if="!currentUser" class="navbar-item" to="/login">
           Login
+        </nuxt-link>
+        <nuxt-link v-if="currentUser" class="navbar-item" to="/admin">
+          Admin
         </nuxt-link>
         <div class="navbar-toggle">
           <AppToggleSwitch
@@ -55,7 +58,8 @@ export default {
     layout: {
       type: String,
       default: "default"
-    }
+    },
+    currentUser: Object
   },
   components: {
     AppToggleSwitch

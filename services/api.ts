@@ -29,6 +29,25 @@ export async function getSubjects(): Promise<{ status: number; body: any }> {
   }
 }
 
+export async function updateOrCreateSubject(
+  subject: any
+): Promise<{ status: number; body: any }> {
+  try {
+    let res;
+    if (subject.id) {
+      res = await client.put(`/subjects/${subject.id}`, subject);
+    } else {
+      res = await client.post(`/subjects`, subject);
+    }
+    return {
+      status: 200,
+      body: res.data ? res.data : {}
+    };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
+}
+
 export async function getCourse(
   id: string
 ): Promise<{ status: number; body: any }> {
@@ -45,6 +64,25 @@ export async function getCourse(
       };
     }
     return { status: 400, body: {} };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
+}
+
+export async function updateOrCreateCourses(
+  course: any
+): Promise<{ status: number; body: any }> {
+  try {
+    let res;
+    if (course.id) {
+      res = await client.put(`/courses/${course.id}`, course);
+    } else {
+      res = await client.post(`/courses`, course);
+    }
+    return {
+      status: 200,
+      body: res.data ? res.data : {}
+    };
   } catch (error) {
     return { status: 400, body: {} };
   }

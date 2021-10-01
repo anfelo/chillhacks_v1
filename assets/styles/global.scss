@@ -237,6 +237,34 @@ body.dark-theme {
       color: var(--text-color);
     }
   }
+
+  .modal-card-head {
+    background-color: var(--card-bg);
+    border-color: var(--bg-color);
+    .modal-card-title {
+      color: var(--text-color);
+    }
+  }
+
+  .modal-card-body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .modal-card-foot {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--bg-color);
+  }
+
+  .table {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+
+    thead th {
+      color: $primary;
+    }
+  }
 }
 
 .navbar-link {
