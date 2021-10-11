@@ -73,7 +73,7 @@ export const actions = {
     commit("updateCurrentCourse", payload);
     commit("toggleCourseModalActive", true);
   },
-  async updateOrCreateSubject({ commit, state }: any, payload: any) {
+  async updateOrCreateSubject({ commit, dispatch, state }: any, payload: any) {
     commit("toggleLoading", true);
     try {
       const subject = await fromApi.updateOrCreateSubject({
@@ -84,12 +84,13 @@ export const actions = {
       });
       commit("resetCurrentSubject");
       commit("toggleSubjectModalActive", false);
+      dispatch("getSubjectsData", null, { root: true });
     } catch (error) {
       console.log(error);
     }
     commit("toggleLoading", false);
   },
-  async updateOrCreateCourse({ commit, state }: any, payload: any) {
+  async updateOrCreateCourse({ commit, dispatch, state }: any, payload: any) {
     commit("toggleLoading", true);
     try {
       const course = await fromApi.updateOrCreateCourses({
@@ -102,6 +103,7 @@ export const actions = {
       });
       commit("resetCurrentCourse");
       commit("toggleCourseModalActive", false);
+      dispatch("getCoursesData", null, { root: true });
     } catch (error) {
       console.log(error);
     }

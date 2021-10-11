@@ -16,28 +16,32 @@
     <tbody>
       <tr v-for="course in courses" :key="course.id">
         <td>
-          <abbr :title="course.id">{{ getShortID(course.id) }}</abbr>
-          <button
-            class="button is-small"
-            @click="e => handleCopyToClipBoard(course.id)"
-          >
-            <span class="icon is-small">
-              <i class="far fa-copy"></i>
-            </span>
-          </button>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="course.id">{{ getShortID(course.id) }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(course.id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
         </td>
         <td>
-          <abbr :title="course.subject_id">{{
-            getShortID(course.subject_id)
-          }}</abbr>
-          <button
-            class="button is-small"
-            @click="e => handleCopyToClipBoard(course.subject_id)"
-          >
-            <span class="icon is-small">
-              <i class="far fa-copy"></i>
-            </span>
-          </button>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="course.subject_id">{{
+              getShortID(course.subject_id)
+            }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(course.subject_id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
         </td>
         <td>{{ course.title }}</td>
         <td>{{ course.slug }}</td>

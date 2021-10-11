@@ -27,8 +27,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async getSubjectsData({ state, commit }) {
-    if (state.subjects.length) return;
+  async getSubjectsData({ commit }) {
     try {
       const res = await fromApi.getSubjects();
       if (res.status === 200) {
@@ -38,8 +37,7 @@ export const actions = {
       console.log(error);
     }
   },
-  async getCoursesData({ state, commit }) {
-    if (state.courses.length) return;
+  async getCoursesData({ commit }) {
     try {
       const res = await fromApi.getCourses();
       if (res.status === 200) {

@@ -1,8 +1,23 @@
 import axios from "axios";
+import * as fromLocalStorage from "@/services/localStorage";
 
 const client = axios.create({
-  baseURL: "http://www.chillhacks.com/auth"
+  baseURL: "https://chillhacks.com/auth"
 });
+
+const getClient = () => {
+  const token = fromLocalStorage.loadEntry("token");
+  if (token) {
+    return axios.create({
+      baseURL: "https://chillhacks.com/auth",
+      headers: {
+        Authorization: token
+      }
+    });
+  } else {
+    return client;
+  }
+};
 
 export async function signInWithUsernameAndPassword(
   username: string,
@@ -13,10 +28,13 @@ export async function signInWithUsernameAndPassword(
       username,
       password
     };
-    const res = await client.post("/login", data);
+    const res = await getClient().post("/login", data);
+    if (res.data && res.data.token) {
+      fromLocalStorage.saveEntry({ key: "token", value: res.data.token });
+    }
     return {
       status: 200,
-      body: res.data || {}
+      body: res.data.user || {}
     };
   } catch (error) {
     return { status: 400, body: {} };
@@ -25,7 +43,7 @@ export async function signInWithUsernameAndPassword(
 
 export async function signOut(): Promise<{ status: number; body: any }> {
   try {
-    const res = await client.get("/logout");
+    const res = await getClient().get("/logout");
     return {
       status: 200,
       body: res.data || {}
@@ -37,7 +55,7 @@ export async function signOut(): Promise<{ status: number; body: any }> {
 
 export async function getCurrentUser(): Promise<{ status: number; body: any }> {
   try {
-    const res = await client.get("/currentuser");
+    const res = await getClient().get("/currentuser");
     return {
       status: 200,
       body: res.data && res.data.user ? res.data.user : null

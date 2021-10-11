@@ -14,15 +14,17 @@
     <tbody>
       <tr v-for="subject in subjects" :key="subject.id">
         <td>
-          <abbr :title="subject.id">{{ getShortID(subject.id) }}</abbr>
-          <button
-            class="button is-small"
-            @click="e => handleCopyToClipBoard(subject.id)"
-          >
-            <span class="icon is-small">
-              <i class="far fa-copy"></i>
-            </span>
-          </button>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="subject.id">{{ getShortID(subject.id) }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(subject.id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
         </td>
         <td>{{ subject.title }}</td>
         <td>{{ subject.slug }}</td>
