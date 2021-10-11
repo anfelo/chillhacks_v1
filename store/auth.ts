@@ -86,8 +86,9 @@ export const actions = {
   togglePwVisible({ commit }: any) {
     commit("togglePwVisible");
   },
-  signOut() {
+  signOut({ commit }) {
     authService.signOut();
+    commit("updateCurrentUser", null);
   },
   async signInOrCreateUser({ commit, state }: any) {
     commit("toggleAuthLoading", true);

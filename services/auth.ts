@@ -34,7 +34,7 @@ export async function signInWithUsernameAndPassword(
     }
     return {
       status: 200,
-      body: res.data.user || {}
+      body: res.data && res.data.user ? res.data.user : null
     };
   } catch (error) {
     return { status: 400, body: {} };
@@ -44,6 +44,7 @@ export async function signInWithUsernameAndPassword(
 export async function signOut(): Promise<{ status: number; body: any }> {
   try {
     const res = await getClient().get("/logout");
+    fromLocalStorage.removeEntry("token");
     return {
       status: 200,
       body: res.data || {}

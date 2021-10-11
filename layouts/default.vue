@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <AppUser>
     <div class="container">
       <AppNavbar
         :isDark="appTheme === 'dark-theme'"
@@ -10,18 +10,20 @@
       <Nuxt />
     </main>
     <AppFooter />
-  </div>
+  </AppUser>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import AppNavbar from "@/components/AppNavbar.vue";
 import AppFooter from "@/components/AppFooter.vue";
+import AppUser from "@/components/AppUser.vue";
 import * as fromLocalStorage from "@/services/localStorage";
 export default {
   components: {
     AppNavbar,
-    AppFooter
+    AppFooter,
+    AppUser
   },
   mounted() {
     const theme = fromLocalStorage.loadEntry("theme");

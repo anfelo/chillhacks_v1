@@ -62,9 +62,9 @@ export default {
   computed: {
     ...mapState(["currentCourse"]),
     lessonsByCategory() {
-      const categories = this.currentCourse.lessons.map(
-        lesson => lesson.category
-      );
+      const categories = this.currentCourse.lessons
+        ? this.currentCourse.lessons.map(lesson => lesson.category)
+        : [];
       const categoriesSet = new Set(categories);
       return [...categoriesSet].map(category => {
         return {

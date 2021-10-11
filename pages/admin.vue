@@ -75,7 +75,10 @@ export default {
     AppCoursesTable
   },
   computed: {
-    ...mapState(["courses", "subjects"])
+    ...mapState(["courses", "subjects"]),
+    ...mapState("auth", {
+      currentUser: state => state.currentUser
+    })
   },
   methods: {
     ...mapActions("admin", [
@@ -83,6 +86,15 @@ export default {
       "updateCourseModalActive",
       "updateLessonModalActive"
     ])
+  },
+  watch: {
+    currentUser: function(value) {
+      if (!value || !value.id || value.role !== "admin") {
+        this.$router.push({
+          path: "/"
+        });
+      }
+    }
   }
 };
 </script>
