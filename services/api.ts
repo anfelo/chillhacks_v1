@@ -1,27 +1,28 @@
 import axios from "axios";
-import * as fromLocalStorage from "@/services/localStorage";
+import { withInterceptors } from "./interceptors";
 
 const client = axios.create({
   baseURL: "https://chillhacks.com/api"
 });
 
-const getClient = () => {
-  const token = fromLocalStorage.loadEntry("token");
-  if (token) {
-    return axios.create({
-      baseURL: "https://chillhacks.com/api",
-      headers: {
-        Authorization: token
-      }
-    });
-  } else {
-    return client;
-  }
-};
+const getClient = () => withInterceptors(client);
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
   try {
     const res = await getClient().get("/courses");
+    return {
+      status: 200,
+      body: res.data.results ? res.data.results : []
+    };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, body: {} };
+  }
+}
+
+export async function getLessons(): Promise<{ status: number; body: any }> {
+  try {
+    const res = await getClient().get("/lessons");
     return {
       status: 200,
       body: res.data.results ? res.data.results : []

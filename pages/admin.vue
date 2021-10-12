@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="currentUser && currentUser.role === 'admin'">
     <section class="section">
       <div class="subjects">
         <div class="container has-text-centered">
@@ -91,18 +91,16 @@ import AppCoursesTable from "@/components/AppCoursesTable.vue";
 import AppLessonsTable from "@/components/AppLessonsTable.vue";
 
 export default {
-  async asyncData({ store }) {
-    await store.dispatch("getCoursesData");
-  },
   mounted() {
-    if (
-      !this.$store.state.auth.currentUser &&
-      this.$store.state.auth.currentUserLoaded
-    ) {
+    if (!this.$store.state.auth.currentUser) {
       this.$router.push({
         path: "/"
       });
     }
+  },
+  async asyncData({ store }) {
+    await store.dispatch("getCoursesData");
+    await store.dispatch("getLessonsData");
   },
   components: {
     AppCardList,
@@ -114,16 +112,10 @@ export default {
     AppLessonsTable
   },
   computed: {
-    ...mapState(["courses", "subjects"]),
+    ...mapState(["courses", "subjects", "lessons"]),
     ...mapState("auth", {
       currentUser: state => state.currentUser
-    }),
-    lessons() {
-      return this.courses.reduce((acc, curr) => {
-        const lessons = curr.lessons || [];
-        return [...acc, ...lessons];
-      }, []);
-    }
+    })
   },
   methods: {
     ...mapActions("admin", [

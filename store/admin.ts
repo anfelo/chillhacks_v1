@@ -139,7 +139,7 @@ export const actions = {
       });
       commit("resetCurrentLesson");
       commit("toggleLessonModalActive", false);
-      dispatch("getCoursesData", null, { root: true });
+      dispatch("getLessonsData", null, { root: true });
     } catch (error) {
       console.log(error);
     }

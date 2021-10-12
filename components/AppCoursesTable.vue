@@ -6,7 +6,6 @@
         <th>SubjectID</th>
         <th>Title</th>
         <th>Slug</th>
-        <th>Description</th>
         <th>Image</th>
         <th>Updated At</th>
         <th>Created At</th>
@@ -45,7 +44,6 @@
         </td>
         <td>{{ course.title }}</td>
         <td>{{ course.slug }}</td>
-        <td>{{ course.description | truncate(10) }}</td>
         <td>
           <figure class="image is-32x32">
             <img :src="`/img/${course.img_url}`" alt="Image" />

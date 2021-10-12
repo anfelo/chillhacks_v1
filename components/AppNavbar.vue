@@ -164,4 +164,10 @@ export default {
     display: none;
   }
 }
+@media screen and (min-width: 1024px) {
+  .navbar-dropdown {
+    right: 0;
+    left: initial;
+  }
+}
 </style>

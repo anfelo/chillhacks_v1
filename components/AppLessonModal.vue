@@ -130,7 +130,6 @@ export default {
         this.currentLesson.category &&
         this.currentLesson.category.trim() &&
         this.currentLesson.sorting_order &&
-        this.currentLesson.sorting_order.trim() &&
         this.currentLesson.course_id &&
         this.currentLesson.content &&
         this.currentLesson.content.trim()

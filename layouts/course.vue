@@ -1,32 +1,42 @@
 <template>
-  <div class="course-container">
-    <div :class="`sidenav-container ${isSidebarOpen ? 'opened' : 'collapsed'}`">
-      <AppSideNavbar
-        @toggle="handleSidebarToggle"
-        :isSidebarOpen="isSidebarOpen"
-      />
+  <AppUser>
+    <div class="course-container">
+      <div
+        :class="`sidenav-container ${isSidebarOpen ? 'opened' : 'collapsed'}`"
+      >
+        <AppSideNavbar
+          @toggle="handleSidebarToggle"
+          :isSidebarOpen="isSidebarOpen"
+        />
+      </div>
+      <main
+        :class="
+          `course-content ${
+            appTheme === 'dark-theme' ? 'has-background-dark' : ''
+          } ${!isSidebarOpen ? 'full-width' : ''}`
+        "
+      >
+        <AppNavbar
+          :isDark="appTheme === 'dark-theme'"
+          :currentUser="currentUser"
+          :layout="'course'"
+        />
+        <Nuxt />
+      </main>
     </div>
-    <main
-      :class="
-        `course-content ${
-          appTheme === 'dark-theme' ? 'has-background-dark' : ''
-        } ${!isSidebarOpen ? 'full-width' : ''}`
-      "
-    >
-      <AppNavbar :isDark="appTheme === 'dark-theme'" :layout="'course'" />
-      <Nuxt />
-    </main>
-  </div>
+  </AppUser>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import AppSideNavbar from "@/components/AppSideNavbar.vue";
+import AppUser from "@/components/AppUser.vue";
 import * as fromLocalStorage from "@/services/localStorage";
 
 export default {
   components: {
-    AppSideNavbar
+    AppSideNavbar,
+    AppUser
   },
   mounted() {
     const theme = fromLocalStorage.loadEntry("theme");
@@ -40,7 +50,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["appTheme"])
+    ...mapState(["appTheme"]),
+    ...mapState("auth", ["currentUser"])
   },
   methods: {
     handleSidebarToggle() {

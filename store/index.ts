@@ -4,6 +4,7 @@ export const state = () => ({
   appTheme: "dark-theme",
   courses: [],
   subjects: [],
+  lessons: [],
   currentCourse: {},
   currentLesson: {}
 });
@@ -17,6 +18,9 @@ export const mutations = {
   },
   updateCourses: (state, payload) => {
     state.courses = payload;
+  },
+  updateLessons: (state, payload) => {
+    state.lessons = payload;
   },
   updateCurrentCourse: (state, payload) => {
     state.currentCourse = payload;
@@ -42,6 +46,16 @@ export const actions = {
       const res = await fromApi.getCourses();
       if (res.status === 200) {
         commit("updateCourses", res.body);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async getLessonsData({ commit }) {
+    try {
+      const res = await fromApi.getLessons();
+      if (res.status === 200) {
+        commit("updateLessons", res.body);
       }
     } catch (error) {
       console.log(error);

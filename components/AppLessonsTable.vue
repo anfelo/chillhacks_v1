@@ -3,11 +3,11 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>SubjectID</th>
+        <th>CourseID</th>
         <th>Title</th>
         <th>Slug</th>
-        <th>Description</th>
-        <th>Image</th>
+        <th>Category</th>
+        <th>Order</th>
         <th>Updated At</th>
         <th>Created At</th>
         <th></th>
@@ -15,14 +15,40 @@
     </thead>
     <tbody>
       <tr v-for="lesson in lessons" :key="lesson.id">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="lesson.id">{{ getShortID(lesson.id) }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(lesson.id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
+        </td>
+        <td>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="lesson.course_id">{{
+              getShortID(lesson.course_id)
+            }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(lesson.course_id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
+        </td>
+        <td>{{ lesson.title }}</td>
+        <td>{{ lesson.slug }}</td>
+        <td>{{ lesson.category }}</td>
+        <td>{{ lesson.sorting_order }}</td>
+        <td>{{ formatDate(lesson.updated) }}</td>
+        <td>{{ formatDate(lesson.created) }}</td>
         <td>
           <nav class="level">
             <div class="level-left">

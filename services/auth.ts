@@ -1,23 +1,12 @@
 import axios from "axios";
 import * as fromLocalStorage from "@/services/localStorage";
+import { withInterceptors } from "./interceptors";
 
 const client = axios.create({
   baseURL: "https://chillhacks.com/auth"
 });
 
-const getClient = () => {
-  const token = fromLocalStorage.loadEntry("token");
-  if (token) {
-    return axios.create({
-      baseURL: "https://chillhacks.com/auth",
-      headers: {
-        Authorization: token
-      }
-    });
-  } else {
-    return client;
-  }
-};
+const getClient = () => withInterceptors(client);
 
 export async function signInWithUsernameAndPassword(
   username: string,
