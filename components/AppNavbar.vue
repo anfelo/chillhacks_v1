@@ -38,7 +38,7 @@
           v-if="currentUser"
           class="navbar-item navbar-avatar has-dropdown is-hoverable"
         >
-          <AppAvatarDropdown />
+          <AppAvatarDropdown :username="currentUser.username" />
           <div class="navbar-dropdown">
             <div class="navbar-item">Hello {{ currentUser.username }} 👋</div>
             <hr class="navbar-divider" />

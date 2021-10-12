@@ -1,20 +1,30 @@
 <template>
   <div class="avatar">
-    <figure class="image is-24x24">
-      <img
-        class="is-rounded"
-        src="https://bulma.io/images/placeholders/128x128.png"
-      />
+    <figure class="image is-32x32 has-background-info">
+      <img :src="`https://avatars.dicebear.com/api/bottts/${username}.svg`" />
     </figure>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    username: {
+      type: String,
+      default: "avatar"
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .avatar {
-  padding: 1em 0.5em 0;
+  padding: 0 0.5em;
+  display: flex;
+  align-items: center;
+
+  .image {
+    border-radius: 50%;
+  }
 }
 </style>

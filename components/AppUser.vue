@@ -1,9 +1,9 @@
 <template>
   <div>
     <slot v-if="!currentUserLoading"></slot>
-    <div v-if="currentUserLoading">
-      <AppLoader />
-    </div>
+    <transition name="fade">
+      <AppLoader v-if="currentUserLoading" />
+    </transition>
   </div>
 </template>
 
@@ -25,4 +25,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
