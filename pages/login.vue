@@ -116,7 +116,8 @@ export default {
       pwVisible: state => state.pwVisible,
       isEmailTouched: state => state.isEmailTouched,
       isPwTouched: state => state.isPwTouched,
-      isUsernameTouched: state => state.isUsernameTouched
+      isUsernameTouched: state => state.isUsernameTouched,
+      currentUser: state => state.currentUser
     }),
     ...mapGetters("auth", ["isEmailValid", "isPwValid", "isUsernameValid"]),
     isFormValid() {
@@ -139,6 +140,15 @@ export default {
       event.preventDefault();
       if (this.isFormValid) {
         this.signInOrCreateUser();
+      }
+    }
+  },
+  watch: {
+    currentUser: function(value) {
+      if (value && value.id) {
+        this.$router.push({
+          path: "/courses"
+        });
       }
     }
   }

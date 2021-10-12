@@ -4,10 +4,10 @@ export const state = () => ({
   loading: false,
   currentSubject: {},
   currentCourse: {},
-  currentLesson: null,
+  currentLesson: {},
   isSubjectModalActive: false,
   isCourseModalActive: false,
-  isLessonmodalActive: false
+  isLessonModalActive: false
 });
 
 export const mutations = {
@@ -35,11 +35,20 @@ export const mutations = {
       ...payload
     });
   },
+  updateCurrentLesson(state, payload) {
+    return (state.currentLesson = {
+      ...state.currentLesson,
+      ...payload
+    });
+  },
   resetCurrentSubject(state, payload) {
     state.currentSubject = {};
   },
   resetCurrentCourse(state, payload) {
     state.currentCourse = {};
+  },
+  resetCurrentLesson(state, payload) {
+    state.currentLesson = {};
   }
 };
 
@@ -65,6 +74,9 @@ export const actions = {
   updateCurrentCourse({ commit }: any, payload) {
     commit("updateCurrentCourse", payload);
   },
+  updateCurrentLesson({ commit }: any, payload) {
+    commit("updateCurrentLesson", payload);
+  },
   editSubject({ commit }: any, payload) {
     commit("updateCurrentSubject", payload);
     commit("toggleSubjectModalActive", true);
@@ -73,7 +85,11 @@ export const actions = {
     commit("updateCurrentCourse", payload);
     commit("toggleCourseModalActive", true);
   },
-  async updateOrCreateSubject({ commit, state }: any, payload: any) {
+  editLesson({ commit }: any, payload) {
+    commit("updateCurrentLesson", payload);
+    commit("toggleLessonModalActive", true);
+  },
+  async updateOrCreateSubject({ commit, dispatch, state }: any, payload: any) {
     commit("toggleLoading", true);
     try {
       const subject = await fromApi.updateOrCreateSubject({
@@ -84,12 +100,13 @@ export const actions = {
       });
       commit("resetCurrentSubject");
       commit("toggleSubjectModalActive", false);
+      dispatch("getSubjectsData", null, { root: true });
     } catch (error) {
       console.log(error);
     }
     commit("toggleLoading", false);
   },
-  async updateOrCreateCourse({ commit, state }: any, payload: any) {
+  async updateOrCreateCourse({ commit, dispatch, state }: any, payload: any) {
     commit("toggleLoading", true);
     try {
       const course = await fromApi.updateOrCreateCourses({
@@ -102,6 +119,27 @@ export const actions = {
       });
       commit("resetCurrentCourse");
       commit("toggleCourseModalActive", false);
+      dispatch("getCoursesData", null, { root: true });
+    } catch (error) {
+      console.log(error);
+    }
+    commit("toggleLoading", false);
+  },
+  async updateOrCreateLesson({ commit, dispatch, state }: any, payload: any) {
+    commit("toggleLoading", true);
+    try {
+      const lesson = await fromApi.updateOrCreateLessons({
+        id: state.currentLesson.id,
+        course_id: state.currentLesson.course_id,
+        title: state.currentLesson.title,
+        slug: state.currentLesson.slug,
+        category: state.currentLesson.category,
+        sorting_order: +state.currentLesson.sorting_order,
+        content: state.currentLesson.content
+      });
+      commit("resetCurrentLesson");
+      commit("toggleLessonModalActive", false);
+      dispatch("getLessonsData", null, { root: true });
     } catch (error) {
       console.log(error);
     }

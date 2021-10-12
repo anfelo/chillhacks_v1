@@ -1,7 +1,20 @@
+import path from "path";
+import fs from "fs";
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: "server",
 
+  server: {
+    https: {
+      key: fs.readFileSync(
+        path.resolve(__dirname, "certs/chillhacks.com+4-key.pem")
+      ),
+      cert: fs.readFileSync(
+        path.resolve(__dirname, "certs/chillhacks.com+4.pem")
+      )
+    }
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: "chillhacks",
@@ -38,10 +51,7 @@ export default {
   css: ["@/assets/styles/global.scss"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    "@/pluggins/getsubjects.server.ts",
-    "@/pluggins/getcurrentuser.server.ts"
-  ],
+  plugins: ["@/pluggins/getsubjects.server.ts"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

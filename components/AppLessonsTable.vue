@@ -3,22 +3,24 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>CourseID</th>
         <th>Title</th>
         <th>Slug</th>
-        <th>Image</th>
+        <th>Category</th>
+        <th>Order</th>
         <th>Updated At</th>
         <th>Created At</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="subject in subjects" :key="subject.id">
+      <tr v-for="lesson in lessons" :key="lesson.id">
         <td>
           <div class="is-flex is-justify-content-space-between">
-            <abbr :title="subject.id">{{ getShortID(subject.id) }}</abbr>
+            <abbr :title="lesson.id">{{ getShortID(lesson.id) }}</abbr>
             <button
               class="button is-small"
-              @click="e => handleCopyToClipBoard(subject.id)"
+              @click="e => handleCopyToClipBoard(lesson.id)"
             >
               <span class="icon is-small">
                 <i class="far fa-copy"></i>
@@ -26,22 +28,34 @@
             </button>
           </div>
         </td>
-        <td>{{ subject.title }}</td>
-        <td>{{ subject.slug }}</td>
         <td>
-          <figure class="image is-32x32">
-            <img :src="`/img/${subject.img_url}`" alt="Image" />
-          </figure>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="lesson.course_id">{{
+              getShortID(lesson.course_id)
+            }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(lesson.course_id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
         </td>
-        <td>{{ formatDate(subject.updated) }}</td>
-        <td>{{ formatDate(subject.created) }}</td>
+        <td>{{ lesson.title }}</td>
+        <td>{{ lesson.slug }}</td>
+        <td>{{ lesson.category }}</td>
+        <td>{{ lesson.sorting_order }}</td>
+        <td>{{ formatDate(lesson.updated) }}</td>
+        <td>{{ formatDate(lesson.created) }}</td>
         <td>
           <nav class="level">
             <div class="level-left">
               <div class="level-item">
                 <button
                   class="button is-info is-small"
-                  @click="e => editSubject(subject)"
+                  @click="e => editLesson(lesson)"
                 >
                   <span class="icon is-small">
                     <i class="fas fa-pencil-alt"></i>
@@ -69,10 +83,10 @@ import { getDateStringFromISOString } from "@/helpers/formatters";
 
 export default {
   props: {
-    subjects: Array
+    lessons: Array
   },
   methods: {
-    ...mapActions("admin", ["editSubject"]),
+    ...mapActions("admin", ["editLesson"]),
     getShortID(id: string) {
       return id.slice(0, 8);
     },
@@ -81,6 +95,12 @@ export default {
     },
     formatDate(date: string) {
       return getDateStringFromISOString(date);
+    }
+  },
+  filters: {
+    truncate(value, length) {
+      if (!value) return "";
+      return value.slice(0, length) + "...";
     }
   }
 };

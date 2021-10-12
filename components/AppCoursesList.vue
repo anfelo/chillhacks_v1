@@ -1,5 +1,8 @@
 <template>
-  <section :class="`hero is-small ${theme}`">
+  <section
+    v-if="filterCourses(recentCourses).length"
+    :class="`hero is-small ${theme}`"
+  >
     <div class="hero-body">
       <div class="container has-text-centered">
         <div class="section-title">
@@ -57,7 +60,9 @@ export default {
       return this.courses.map(course => {
         return {
           ...course,
-          subject: { ...this.subjects.find(sub => sub.id === course.subject_id) },
+          subject: {
+            ...this.subjects.find(sub => sub.id === course.subject_id)
+          },
           subtitle: `${course.lessons_count} lessons`,
           tags: ["New!"],
           url: `/courses/${course.slug}`

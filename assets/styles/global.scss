@@ -236,6 +236,11 @@ body.dark-theme {
       background-color: var(--card-active-bg);
       color: var(--text-color);
     }
+
+    .navbar-item:focus {
+      background-color: var(--card-active-bg);
+      color: var(--text-color);
+    }
   }
 
   .modal-card-head {

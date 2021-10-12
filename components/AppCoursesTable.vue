@@ -6,7 +6,6 @@
         <th>SubjectID</th>
         <th>Title</th>
         <th>Slug</th>
-        <th>Description</th>
         <th>Image</th>
         <th>Updated At</th>
         <th>Created At</th>
@@ -16,32 +15,35 @@
     <tbody>
       <tr v-for="course in courses" :key="course.id">
         <td>
-          <abbr :title="course.id">{{ getShortID(course.id) }}</abbr>
-          <button
-            class="button is-small"
-            @click="e => handleCopyToClipBoard(course.id)"
-          >
-            <span class="icon is-small">
-              <i class="far fa-copy"></i>
-            </span>
-          </button>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="course.id">{{ getShortID(course.id) }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(course.id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
         </td>
         <td>
-          <abbr :title="course.subject_id">{{
-            getShortID(course.subject_id)
-          }}</abbr>
-          <button
-            class="button is-small"
-            @click="e => handleCopyToClipBoard(course.subject_id)"
-          >
-            <span class="icon is-small">
-              <i class="far fa-copy"></i>
-            </span>
-          </button>
+          <div class="is-flex is-justify-content-space-between">
+            <abbr :title="course.subject_id">{{
+              getShortID(course.subject_id)
+            }}</abbr>
+            <button
+              class="button is-small"
+              @click="e => handleCopyToClipBoard(course.subject_id)"
+            >
+              <span class="icon is-small">
+                <i class="far fa-copy"></i>
+              </span>
+            </button>
+          </div>
         </td>
         <td>{{ course.title }}</td>
         <td>{{ course.slug }}</td>
-        <td>{{ course.description | truncate(10) }}</td>
         <td>
           <figure class="image is-32x32">
             <img :src="`/img/${course.img_url}`" alt="Image" />

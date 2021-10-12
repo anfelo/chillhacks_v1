@@ -18,3 +18,11 @@ export const saveEntry = (entry: { value: any; key: string }): void => {
     console.log("Unable to set localStorage item");
   }
 };
+
+export const removeEntry = (entryKey: string): void => {
+  try {
+    localStorage.removeItem(entryKey);
+  } catch (error) {
+    console.log("Unable to remove localStorage item");
+  }
+};

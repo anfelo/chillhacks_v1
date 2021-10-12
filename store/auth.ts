@@ -13,7 +13,8 @@ export const state = () => ({
   isPwTouched: false,
   isUsernameTouched: false,
   errorMessage: "",
-  currentUser: null
+  currentUser: null,
+  currentUserLoading: false
 });
 
 export const getters = {
@@ -67,6 +68,9 @@ export const mutations = {
     state.isPwTouched = false;
     state.isUsernameTouched = false;
     return;
+  },
+  toggleCurrentUserLoading(state: any, payload: any) {
+    return (state.currentUserLoading = payload);
   }
 };
 
@@ -86,8 +90,9 @@ export const actions = {
   togglePwVisible({ commit }: any) {
     commit("togglePwVisible");
   },
-  signOut() {
+  signOut({ commit }) {
     authService.signOut();
+    commit("updateCurrentUser", null);
   },
   async signInOrCreateUser({ commit, state }: any) {
     commit("toggleAuthLoading", true);
@@ -108,7 +113,9 @@ export const actions = {
     commit("resetAuthForm");
   },
   async getCurrentUser({ commit, state }: any) {
+    commit("toggleCurrentUserLoading", true);
     const res = await authService.getCurrentUser();
     commit("updateCurrentUser", res.body);
+    setTimeout(() => commit("toggleCurrentUserLoading", false), 2000);
   }
 };
