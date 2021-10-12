@@ -1,20 +1,9 @@
 import path from "path";
 import fs from "fs";
 
-export default {
+const config = {
   // Target: https://go.nuxtjs.dev/config-target
   target: "server",
-
-  server: {
-    https: {
-      key: fs.readFileSync(
-        path.resolve(__dirname, "certs/chillhacks.com+4-key.pem")
-      ),
-      cert: fs.readFileSync(
-        path.resolve(__dirname, "certs/chillhacks.com+4.pem")
-      )
-    }
-  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: "chillhacks",
@@ -76,3 +65,18 @@ export default {
     baseUrl: process.env.PLATFORM_BASE_URL
   }
 };
+
+if (process.env.NODE_ENV !== "production") {
+  config.server = {
+    https: {
+      key: fs.readFileSync(
+        path.resolve(__dirname, "certs/chillhacks.com+4-key.pem")
+      ),
+      cert: fs.readFileSync(
+        path.resolve(__dirname, "certs/chillhacks.com+4.pem")
+      )
+    }
+  };
+}
+
+export default config;
