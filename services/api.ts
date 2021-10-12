@@ -121,3 +121,28 @@ export async function getLesson({
     return { status: 400, body: {} };
   }
 }
+
+export async function updateOrCreateLessons(
+  lesson: any
+): Promise<{ status: number; body: any }> {
+  try {
+    let res;
+    if (lesson.id) {
+      res = await getClient().put(
+        `/courses/${lesson.course_id}/lessons/${lesson.id}`,
+        lesson
+      );
+    } else {
+      res = await getClient().post(
+        `/courses/${lesson.course_id}/lessons`,
+        lesson
+      );
+    }
+    return {
+      status: 200,
+      body: res.data ? res.data : {}
+    };
+  } catch (error) {
+    return { status: 400, body: {} };
+  }
+}

@@ -52,6 +52,31 @@
         </div>
       </div>
     </section>
+    <section class="section">
+      <div class="courses">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            📑 All Lessons
+          </h1>
+          <div class="box">
+            <AppLessonsTable
+              v-if="lessons && lessons.length"
+              :lessons="lessons"
+            ></AppLessonsTable>
+            <div v-if="!lessons || !lessons.length">
+              No lessons added yet 😑...
+            </div>
+          </div>
+          <button
+            @click="e => updateLessonModalActive(true)"
+            class="button is-primary"
+          >
+            Add Lessons
+          </button>
+          <AppLessonModal></AppLessonModal>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -60,25 +85,45 @@ import { mapState, mapActions } from "vuex";
 import AppCardList from "@/components/AppCardList.vue";
 import AppSubjectModal from "@/components/AppSubjectModal.vue";
 import AppCourseModal from "@/components/AppCourseModal.vue";
+import AppLessonModal from "@/components/AppLessonModal.vue";
 import AppSubjectsTable from "@/components/AppSubjectsTable.vue";
 import AppCoursesTable from "@/components/AppCoursesTable.vue";
+import AppLessonsTable from "@/components/AppLessonsTable.vue";
 
 export default {
   async asyncData({ store }) {
     await store.dispatch("getCoursesData");
   },
+  mounted() {
+    if (
+      !this.$store.state.auth.currentUser &&
+      this.$store.state.auth.currentUserLoaded
+    ) {
+      this.$router.push({
+        path: "/"
+      });
+    }
+  },
   components: {
     AppCardList,
     AppSubjectModal,
     AppCourseModal,
+    AppLessonModal,
     AppSubjectsTable,
-    AppCoursesTable
+    AppCoursesTable,
+    AppLessonsTable
   },
   computed: {
     ...mapState(["courses", "subjects"]),
     ...mapState("auth", {
       currentUser: state => state.currentUser
-    })
+    }),
+    lessons() {
+      return this.courses.reduce((acc, curr) => {
+        const lessons = curr.lessons || [];
+        return [...acc, ...lessons];
+      }, []);
+    }
   },
   methods: {
     ...mapActions("admin", [

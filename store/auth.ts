@@ -13,7 +13,8 @@ export const state = () => ({
   isPwTouched: false,
   isUsernameTouched: false,
   errorMessage: "",
-  currentUser: null
+  currentUser: null,
+  currentUserLoaded: false
 });
 
 export const getters = {
@@ -67,6 +68,9 @@ export const mutations = {
     state.isPwTouched = false;
     state.isUsernameTouched = false;
     return;
+  },
+  toggleCurrentUserLoaded(state: any, payload: any) {
+    return (state.currentUserLoaded = payload);
   }
 };
 
@@ -109,7 +113,9 @@ export const actions = {
     commit("resetAuthForm");
   },
   async getCurrentUser({ commit, state }: any) {
+    commit("toggleCurrentUserLoaded", false);
     const res = await authService.getCurrentUser();
     commit("updateCurrentUser", res.body);
+    commit("toggleCurrentUserLoaded", true);
   }
 };
