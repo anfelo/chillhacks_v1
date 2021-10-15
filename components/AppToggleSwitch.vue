@@ -29,6 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~assets/styles/theme.scss";
 .switch {
   position: relative;
   display: inline-block;
@@ -38,8 +39,8 @@ export default {
 }
 .switch-label {
   display: block;
-  width: 48px;
-  height: 24px;
+  width: 56px;
+  height: 32px;
   clip: rect(0 0 0 0);
   color: transparent;
   user-select: none;
@@ -61,15 +62,15 @@ export default {
 .switch-label:after {
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
   transition: left 0.25s ease;
 }
 .switch-input:checked + .switch-label:before {
-  background-color: #363636;
+  background-color: $info;
 }
 .switch-input:checked + .switch-label:after {
   left: 24px;
@@ -77,7 +78,9 @@ export default {
 .switch .icon {
   position: absolute;
   top: 0;
-  left: 24px;
+  left: 32px;
+  height: 100%;
+  font-size: 1.2em;
 }
 .switch-input:checked ~ .icon {
   left: 0;

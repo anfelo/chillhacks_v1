@@ -16,7 +16,7 @@ import {
   signOut,
   onAuthStateChanged
 } from "firebase/auth";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC3KGs8WaMURQaaS9Sc4tudOc3vrehJKoQ",
@@ -103,6 +103,12 @@ export async function addOrUpdateDocument(
     status: 200,
     body: docData
   };
+}
+
+export async function uploadObject(path: string, file: File) {
+  const storageRef = ref(storage, path);
+  const snapshot = await uploadBytes(storageRef, file);
+  return snapshot.metadata.name;
 }
 
 export async function getObjectUrl(path: string) {

@@ -31,6 +31,6 @@ export async function getCurrentUserChanges(cb: Function) {
       const userData = await getDocument("users", user.uid);
       return cb(userData);
     }
-    cb(null);
+    cb({ status: 200, body: null });
   });
 }

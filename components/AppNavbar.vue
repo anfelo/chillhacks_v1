@@ -125,9 +125,9 @@ export default {
 }
 .navbar-toggle {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 1em 0.5em 0;
+  padding: 0 0.5em;
 }
 .navbar-menu {
   .navbar-end {

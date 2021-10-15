@@ -3,7 +3,8 @@ import {
   getCollection,
   getDocument,
   addOrUpdateDocument,
-  getObjectUrl
+  getObjectUrl,
+  uploadObject
 } from "./firebase";
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
@@ -87,9 +88,9 @@ export async function getLesson({
 }): Promise<{ status: number; body: any }> {
   try {
     const res = await getDocument(`courses/${courseID}/lessons`, lessonID);
-    if (res.body.slug) {
+    if (res.body.content_filename) {
       const contentUrl = await getObjectUrl(
-        `courses/${courseID}/${res.body.slug}.md`
+        `courses/${courseID}/${res.body.content_filename}`
       );
       const contentRes = await axios.get(contentUrl);
       const contentString = contentRes.data;
@@ -112,6 +113,30 @@ export async function updateOrCreateLessons(
       `courses/${lesson.course_id}/lessons`,
       lesson
     );
+    const courseRes = await getDocument("courses", lesson.course_id);
+    if (courseRes.status === 200) {
+      const course = courseRes.body;
+      await addOrUpdateDocument("courses", {
+        id: course.id,
+        lessons_count: course.lessons_count + 1
+      });
+    }
+    return {
+      status: 200,
+      body: res
+    };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, body: {} };
+  }
+}
+
+export async function uploadFile(
+  path: string,
+  file: File
+): Promise<{ status: number; body: any }> {
+  try {
+    const res = await uploadObject(path, file);
     return {
       status: 200,
       body: res

@@ -66,6 +66,9 @@ export const actions = {
     commit("toggleCourseModalActive", payload);
   },
   updateLessonModalActive({ commit }: any, payload: any) {
+    if (!payload) {
+      commit("resetCurrentLesson");
+    }
     commit("toggleLessonModalActive", payload);
   },
   updateCurrentSubject({ commit }: any, payload) {
@@ -117,7 +120,8 @@ export const actions = {
         title: state.currentCourse.title,
         slug: state.currentCourse.slug,
         img_url: state.currentCourse.img_url,
-        description: state.currentCourse.description
+        description: state.currentCourse.description,
+        lessons_count: 0
       };
       if (state.currentCourse.id) {
         courseData.id = state.currentCourse.id;
@@ -140,12 +144,22 @@ export const actions = {
         slug: state.currentLesson.slug,
         category: state.currentLesson.category,
         sorting_order: +state.currentLesson.sorting_order,
-        content: state.currentLesson.content
+        duration: "5m read",
+        content_filename: state.currentLesson.content_file.name
       };
       if (state.currentLesson.id) {
         lessonData.id = state.currentLesson.id;
       }
       await fromApi.updateOrCreateLessons(lessonData);
+      if (
+        state.currentLesson.content_file &&
+        state.currentLesson.content_file.name
+      ) {
+        await fromApi.uploadFile(
+          `courses/${state.currentLesson.course_id}/${state.currentLesson.content_file.name}`,
+          state.currentLesson.content_file
+        );
+      }
       commit("resetCurrentLesson");
       commit("toggleLessonModalActive", false);
       dispatch("getLessonsData", null, { root: true });
