@@ -1,32 +1,25 @@
 import axios from "axios";
-import { withInterceptors } from "./interceptors";
-
-const client = axios.create({
-  baseURL: "https://chillhacks.com/api"
-});
-
-const getClient = () => withInterceptors(client);
+import {
+  getCollection,
+  getDocument,
+  addOrUpdateDocument,
+  getObjectUrl
+} from "./firebase";
 
 export async function getCourses(): Promise<{ status: number; body: any }> {
   try {
-    const res = await getClient().get("/courses");
-    return {
-      status: 200,
-      body: res.data.results ? res.data.results : []
-    };
+    return await getCollection("courses");
   } catch (error) {
     console.log(error);
     return { status: 400, body: {} };
   }
 }
 
-export async function getLessons(): Promise<{ status: number; body: any }> {
+export async function getLessons(
+  courseID: string
+): Promise<{ status: number; body: any }> {
   try {
-    const res = await getClient().get("/lessons");
-    return {
-      status: 200,
-      body: res.data.results ? res.data.results : []
-    };
+    return await getCollection(`courses/${courseID}/lessons`);
   } catch (error) {
     console.log(error);
     return { status: 400, body: {} };
@@ -35,11 +28,7 @@ export async function getLessons(): Promise<{ status: number; body: any }> {
 
 export async function getSubjects(): Promise<{ status: number; body: any }> {
   try {
-    const res = await getClient().get("/subjects");
-    return {
-      status: 200,
-      body: res.data.results ? res.data.results : []
-    };
+    return await getCollection("subjects");
   } catch (error) {
     return { status: 400, body: {} };
   }
@@ -49,17 +38,13 @@ export async function updateOrCreateSubject(
   subject: any
 ): Promise<{ status: number; body: any }> {
   try {
-    let res;
-    if (subject.id) {
-      res = await getClient().put(`/subjects/${subject.id}`, subject);
-    } else {
-      res = await getClient().post(`/subjects`, subject);
-    }
+    const res = await addOrUpdateDocument("subjects", subject);
     return {
       status: 200,
-      body: res.data ? res.data : {}
+      body: res
     };
   } catch (error) {
+    console.log(error);
     return { status: 400, body: {} };
   }
 }
@@ -68,18 +53,15 @@ export async function getCourse(
   id: string
 ): Promise<{ status: number; body: any }> {
   try {
-    const courseRes = await getClient().get(`/courses/${id}`);
-    const lessonsRes = await getClient().get(`/courses/${id}/lessons`);
-    if (courseRes.data) {
-      return {
-        status: 200,
-        body: {
-          ...courseRes.data,
-          lessons: lessonsRes.data.results
-        }
-      };
-    }
-    return { status: 400, body: {} };
+    const courseRes = await getDocument("courses", id);
+    const lessonsRes = await getCollection(`courses/${id}/lessons`);
+    return {
+      status: 200,
+      body: {
+        ...courseRes.body,
+        lessons: lessonsRes.body
+      }
+    };
   } catch (error) {
     return { status: 400, body: {} };
   }
@@ -89,15 +71,10 @@ export async function updateOrCreateCourses(
   course: any
 ): Promise<{ status: number; body: any }> {
   try {
-    let res;
-    if (course.id) {
-      res = await getClient().put(`/courses/${course.id}`, course);
-    } else {
-      res = await getClient().post(`/courses`, course);
-    }
+    const res = await addOrUpdateDocument("courses", course);
     return {
       status: 200,
-      body: res.data ? res.data : {}
+      body: res
     };
   } catch (error) {
     return { status: 400, body: {} };
@@ -109,14 +86,18 @@ export async function getLesson({
   lessonID
 }): Promise<{ status: number; body: any }> {
   try {
-    const res = await getClient().get(
-      `/courses/${courseID}/lessons/${lessonID}`
-    );
+    const res = await getDocument(`courses/${courseID}/lessons`, lessonID);
+    if (res.body.slug) {
+      const contentUrl = await getObjectUrl(
+        `courses/${courseID}/${res.body.slug}.md`
+      );
+      const contentRes = await axios.get(contentUrl);
+      const contentString = contentRes.data;
+      res.body.content = contentString;
+    }
     return {
       status: 200,
-      body: {
-        ...res.data
-      }
+      body: res.body
     };
   } catch (error) {
     return { status: 400, body: {} };
@@ -127,23 +108,16 @@ export async function updateOrCreateLessons(
   lesson: any
 ): Promise<{ status: number; body: any }> {
   try {
-    let res;
-    if (lesson.id) {
-      res = await getClient().put(
-        `/courses/${lesson.course_id}/lessons/${lesson.id}`,
-        lesson
-      );
-    } else {
-      res = await getClient().post(
-        `/courses/${lesson.course_id}/lessons`,
-        lesson
-      );
-    }
+    const res = await addOrUpdateDocument(
+      `courses/${lesson.course_id}/lessons`,
+      lesson
+    );
     return {
       status: 200,
-      body: res.data ? res.data : {}
+      body: res
     };
   } catch (error) {
+    console.log(error);
     return { status: 400, body: {} };
   }
 }

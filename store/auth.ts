@@ -96,8 +96,8 @@ export const actions = {
   },
   async signInOrCreateUser({ commit, state }: any) {
     commit("toggleAuthLoading", true);
-    const res = await authService.signInWithUsernameAndPassword(
-      state.authForm.username,
+    const res = await authService.signInWithEmailAndPassword(
+      state.authForm.email,
       state.authForm.password
     );
     commit("toggleAuthLoading", false);
@@ -112,10 +112,11 @@ export const actions = {
     }
     commit("resetAuthForm");
   },
-  async getCurrentUser({ commit, state }: any) {
+  async getCurrentUser({ commit }: any) {
     commit("toggleCurrentUserLoading", true);
-    const res = await authService.getCurrentUser();
-    commit("updateCurrentUser", res.body);
-    setTimeout(() => commit("toggleCurrentUserLoading", false), 2000);
+    authService.getCurrentUserChanges(userRes => {
+      commit("updateCurrentUser", userRes.body);
+      setTimeout(() => commit("toggleCurrentUserLoading", false), 1000);
+    });
   }
 };
