@@ -7,30 +7,25 @@
         </div>
 
         <div class="field">
-          <label for="email" class="label">Username</label>
+          <label for="email" class="label">Email</label>
           <div class="control has-icons-left">
             <input
-              id="username"
-              :value="username"
-              @focus="markUsernameAsTouched"
-              @input="e => handleAuthFormChange({ username: e.target.value })"
+              id="email"
+              :value="email"
+              @focus="markEmailAsTouched"
+              @input="e => handleAuthFormChange({ email: e.target.value })"
               :class="
-                `input ${
-                  isUsernameTouched && !isUsernameValid ? 'is-danger' : ''
-                }`
+                `input ${isEmailTouched && !isEmailValid ? 'is-danger' : ''}`
               "
               type="text"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
             />
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
             </span>
           </div>
-          <p
-            v-if="isUsernameTouched && !isUsernameValid"
-            class="help is-danger"
-          >
-            Invalid username format
+          <p v-if="isEmailTouched && !isEmailValid" class="help is-danger">
+            Invalid email format
           </p>
         </div>
 
@@ -121,7 +116,7 @@ export default {
     }),
     ...mapGetters("auth", ["isEmailValid", "isPwValid", "isUsernameValid"]),
     isFormValid() {
-      return this.isUsernameValid && this.isPwValid;
+      return this.isEmailValid && this.isPwValid;
     }
   },
   methods: {

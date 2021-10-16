@@ -65,7 +65,10 @@
                 </button>
               </div>
               <div class="level-item">
-                <button class="button is-danger is-small">
+                <button
+                  class="button is-danger is-small"
+                  @click="e => processDeleteCourse(course)"
+                >
                   <span class="icon is-small">
                     <i class="fas fa-trash-alt"></i>
                   </span>
@@ -88,7 +91,7 @@ export default {
     courses: Array
   },
   methods: {
-    ...mapActions("admin", ["editCourse"]),
+    ...mapActions("admin", ["editCourse", "processDeleteCourse"]),
     getShortID(id: string) {
       return id.slice(0, 8);
     },

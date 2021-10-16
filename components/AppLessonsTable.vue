@@ -63,7 +63,10 @@
                 </button>
               </div>
               <div class="level-item">
-                <button class="button is-danger is-small">
+                <button
+                  class="button is-danger is-small"
+                  @click="processDeleteLesson(lesson)"
+                >
                   <span class="icon is-small">
                     <i class="fas fa-trash-alt"></i>
                   </span>
@@ -86,7 +89,7 @@ export default {
     lessons: Array
   },
   methods: {
-    ...mapActions("admin", ["editLesson"]),
+    ...mapActions("admin", ["editLesson", "processDeleteLesson"]),
     getShortID(id: string) {
       return id.slice(0, 8);
     },

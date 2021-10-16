@@ -51,12 +51,15 @@ export const actions = {
       console.log(error);
     }
   },
-  async getLessonsData({ commit }) {
+  async getLessonsData({ commit, state }) {
     try {
-      const res = await fromApi.getLessons();
-      if (res.status === 200) {
-        commit("updateLessons", res.body);
+      let lessons: any[] = [];
+      for (let index = 0; index < state.courses.length; index++) {
+        const course = state.courses[index];
+        const lessonsRes = await fromApi.getLessons(course.id);
+        lessons.push(...lessonsRes.body);
       }
+      commit("updateLessons", lessons);
     } catch (error) {
       console.log(error);
     }

@@ -1,30 +1,13 @@
-import axios from "axios";
-import * as fromLocalStorage from "@/services/localStorage";
-import { withInterceptors } from "./interceptors";
+import { signIn, logout, onCurrentUserChanges, getDocument } from "./firebase";
 
-const client = axios.create({
-  baseURL: "https://chillhacks.com/auth"
-});
-
-const getClient = () => withInterceptors(client);
-
-export async function signInWithUsernameAndPassword(
-  username: string,
+export async function signInWithEmailAndPassword(
+  email: string,
   password: string
 ): Promise<{ status: number; body: any }> {
   try {
-    const data = {
-      username,
-      password
-    };
-    const res = await getClient().post("/login", data);
-    if (res.data && res.data.token) {
-      fromLocalStorage.saveEntry({ key: "token", value: res.data.token });
-    }
-    return {
-      status: 200,
-      body: res.data && res.data.user ? res.data.user : null
-    };
+    const res = await signIn(email, password);
+    const userData = await getDocument("users", res.body.uid);
+    return userData;
   } catch (error) {
     return { status: 400, body: {} };
   }
@@ -32,25 +15,22 @@ export async function signInWithUsernameAndPassword(
 
 export async function signOut(): Promise<{ status: number; body: any }> {
   try {
-    const res = await getClient().get("/logout");
-    fromLocalStorage.removeEntry("token");
+    await logout();
     return {
       status: 200,
-      body: res.data || {}
+      body: null
     };
   } catch (error) {
     return { status: 400, body: {} };
   }
 }
 
-export async function getCurrentUser(): Promise<{ status: number; body: any }> {
-  try {
-    const res = await getClient().get("/currentuser");
-    return {
-      status: 200,
-      body: res.data && res.data.user ? res.data.user : null
-    };
-  } catch (error) {
-    return { status: 400, body: null };
-  }
+export async function getCurrentUserChanges(cb: Function) {
+  onCurrentUserChanges(async user => {
+    if (user && user.uid) {
+      const userData = await getDocument("users", user.uid);
+      return cb(userData);
+    }
+    cb({ status: 200, body: null });
+  });
 }

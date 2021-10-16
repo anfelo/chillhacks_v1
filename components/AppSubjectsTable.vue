@@ -49,7 +49,10 @@
                 </button>
               </div>
               <div class="level-item">
-                <button class="button is-danger is-small">
+                <button
+                  class="button is-danger is-small"
+                  @click="processDeleteSubject(subject)"
+                >
                   <span class="icon is-small">
                     <i class="fas fa-trash-alt"></i>
                   </span>
@@ -72,7 +75,7 @@ export default {
     subjects: Array
   },
   methods: {
-    ...mapActions("admin", ["editSubject"]),
+    ...mapActions("admin", ["editSubject", "processDeleteSubject"]),
     getShortID(id: string) {
       return id.slice(0, 8);
     },

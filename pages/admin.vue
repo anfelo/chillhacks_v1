@@ -77,6 +77,7 @@
         </div>
       </div>
     </section>
+    <AppConfirmationModal></AppConfirmationModal>
   </div>
 </template>
 
@@ -89,6 +90,7 @@ import AppLessonModal from "@/components/AppLessonModal.vue";
 import AppSubjectsTable from "@/components/AppSubjectsTable.vue";
 import AppCoursesTable from "@/components/AppCoursesTable.vue";
 import AppLessonsTable from "@/components/AppLessonsTable.vue";
+import AppConfirmationModal from "@/components/AppConfirmationModal.vue";
 
 export default {
   mounted() {
@@ -109,7 +111,8 @@ export default {
     AppLessonModal,
     AppSubjectsTable,
     AppCoursesTable,
-    AppLessonsTable
+    AppLessonsTable,
+    AppConfirmationModal
   },
   computed: {
     ...mapState(["courses", "subjects", "lessons"]),

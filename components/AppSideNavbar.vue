@@ -83,7 +83,7 @@ export default {
 @import "~assets/styles/theme.scss";
 
 .menu {
-  height: 100%;
+  min-height: 100vh;
 }
 
 .menu-header {
