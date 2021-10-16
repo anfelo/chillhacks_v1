@@ -38,6 +38,7 @@ export async function getCollection(
   path: string,
   sortBy?: { key: string; direction: "desc" | "asc" }
 ): Promise<{ status: number; body: any }> {
+  if (!path) return { status: 400, body: {} };
   const colRef = collection(db, path);
   let queryRef = query(colRef);
   if (sortBy) {
@@ -63,6 +64,7 @@ export async function getDocument(
   path: string,
   id: string
 ): Promise<{ status: number; body: any }> {
+  if (!path) return { status: 400, body: {} };
   const docRef = doc(db, path, id);
   const docSnapshot = await getDoc(docRef);
   const data = docSnapshot.data();
