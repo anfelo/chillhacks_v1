@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
-      - uses: actions/checkout@v2
-      - run: docker build -t anfelo/chillhacks_client .
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - run: docker push anfelo/chillhacks_client
+      # - uses: actions/checkout@v2
+      # - run: docker build -t anfelo/chillhacks_client .
+      # - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      # - run: docker push anfelo/chillhacks_client
       # - uses: digitalocean/action-doctl@v2
       #   with:
       #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
