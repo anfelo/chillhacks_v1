@@ -3,6 +3,7 @@ import {
   getCollection,
   getDocument,
   addOrUpdateDocument,
+  deleteDocument,
   getObjectUrl,
   uploadObject
 } from "./firebase";
@@ -50,6 +51,21 @@ export async function updateOrCreateSubject(
   }
 }
 
+export async function deleteSubject(
+  subject: any
+): Promise<{ status: number; body: any }> {
+  try {
+    await deleteDocument("subjects", subject.id);
+    return {
+      status: 200,
+      body: true
+    };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, body: {} };
+  }
+}
+
 export async function getCourse(
   id: string
 ): Promise<{ status: number; body: any }> {
@@ -78,6 +94,21 @@ export async function updateOrCreateCourses(
       body: res
     };
   } catch (error) {
+    return { status: 400, body: {} };
+  }
+}
+
+export async function deleteCourse(
+  course: any
+): Promise<{ status: number; body: any }> {
+  try {
+    await deleteDocument("courses", course.id);
+    return {
+      status: 200,
+      body: true
+    };
+  } catch (error) {
+    console.log(error);
     return { status: 400, body: {} };
   }
 }
@@ -124,6 +155,22 @@ export async function updateOrCreateLessons(
     return {
       status: 200,
       body: res
+    };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, body: {} };
+  }
+}
+
+export async function deleteLesson(
+  courseID: string,
+  lessonID: string
+): Promise<{ status: number; body: any }> {
+  try {
+    await deleteDocument(`courses/${courseID}/lessons`, lessonID);
+    return {
+      status: 200,
+      body: true
     };
   } catch (error) {
     console.log(error);

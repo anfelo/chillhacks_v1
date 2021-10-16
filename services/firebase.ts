@@ -5,6 +5,7 @@ import {
   getDocs,
   setDoc,
   updateDoc,
+  deleteDoc,
   doc,
   collection,
   orderBy,
@@ -103,6 +104,10 @@ export async function addOrUpdateDocument(
     status: 200,
     body: docData
   };
+}
+
+export async function deleteDocument(path: string, id: string) {
+  await deleteDoc(doc(db, path, id));
 }
 
 export async function uploadObject(path: string, file: File) {

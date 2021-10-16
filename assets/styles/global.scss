@@ -379,3 +379,11 @@ body.dark-theme {
 .menu-list a {
   padding: 0 0.75em;
 }
+
+.menu {
+  .menu-label {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-weight: bold;
+  }
+}

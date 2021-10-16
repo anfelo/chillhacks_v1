@@ -7,7 +7,9 @@ export const state = () => ({
   currentLesson: {},
   isSubjectModalActive: false,
   isCourseModalActive: false,
-  isLessonModalActive: false
+  isLessonModalActive: false,
+  isConfirmationModalActive: false,
+  confirmationEntity: ""
 });
 
 export const mutations = {
@@ -49,6 +51,12 @@ export const mutations = {
   },
   resetCurrentLesson(state, payload) {
     state.currentLesson = {};
+  },
+  toggleConfirmationModalActive(state, payload) {
+    state.isConfirmationModalActive = payload;
+  },
+  updateConfirmationEntity(state, payload) {
+    state.confirmationEntity = payload;
   }
 };
 
@@ -71,6 +79,15 @@ export const actions = {
     }
     commit("toggleLessonModalActive", payload);
   },
+  updateConfirmationModalActive({ commit }: any, payload: any) {
+    if (!payload) {
+      commit("resetCurrentSubject");
+      commit("resetCurrentCourse");
+      commit("resetCurrentLesson");
+      commit("updateConfirmationEntity", "");
+    }
+    commit("toggleConfirmationModalActive", payload);
+  },
   updateCurrentSubject({ commit }: any, payload) {
     commit("updateCurrentSubject", payload);
   },
@@ -91,6 +108,30 @@ export const actions = {
   editLesson({ commit }: any, payload) {
     commit("updateCurrentLesson", payload);
     commit("toggleLessonModalActive", true);
+  },
+  processDeleteSubject({ commit }: any, payload: any) {
+    commit("updateCurrentSubject", payload);
+    commit("updateConfirmationEntity", "subject");
+    commit("toggleConfirmationModalActive", true);
+  },
+  processDeleteCourse({ commit }: any, payload: any) {
+    commit("updateCurrentCourse", payload);
+    commit("updateConfirmationEntity", "course");
+    commit("toggleConfirmationModalActive", true);
+  },
+  processDeleteLesson({ commit }: any, payload: any) {
+    commit("updateCurrentLesson", payload);
+    commit("updateConfirmationEntity", "lesson");
+    commit("toggleConfirmationModalActive", true);
+  },
+  confirmAction({ dispatch, state }: any) {
+    if (state.confirmationEntity === "subject") {
+      dispatch("deleteSubject");
+    } else if (state.confirmationEntity === "course") {
+      dispatch("deleteCourse");
+    } else if (state.confirmationEntity === "lesson") {
+      dispatch("deleteLesson");
+    }
   },
   async updateOrCreateSubject({ commit, dispatch, state }: any, payload: any) {
     commit("toggleLoading", true);
@@ -163,6 +204,58 @@ export const actions = {
       commit("resetCurrentLesson");
       commit("toggleLessonModalActive", false);
       dispatch("getLessonsData", null, { root: true });
+    } catch (error) {
+      console.log(error);
+    }
+    commit("toggleLoading", false);
+  },
+  async deleteSubject({ commit, dispatch, state }: any) {
+    commit("toggleLoading", true);
+    try {
+      if (state.currentSubject && state.currentSubject.id) {
+        await fromApi.deleteSubject(state.currentSubject);
+        commit("resetCurrentSubject");
+        commit("toggleConfirmationModalActive", false);
+        commit("updateConfirmationEntity", "");
+        dispatch("getSubjectsData", null, { root: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    commit("toggleLoading", false);
+  },
+  async deleteCourse({ commit, dispatch, state }: any) {
+    commit("toggleLoading", true);
+    try {
+      if (state.currentCourse && state.currentCourse.id) {
+      }
+      await fromApi.deleteCourse(state.currentCourse);
+      commit("resetCurrentCourse");
+      commit("toggleConfirmationModalActive", false);
+      commit("updateConfirmationEntity", "");
+      dispatch("getCoursesData", null, { root: true });
+    } catch (error) {
+      console.log(error);
+    }
+    commit("toggleLoading", false);
+  },
+  async deleteLesson({ commit, dispatch, state }: any) {
+    commit("toggleLoading", true);
+    try {
+      if (
+        state.currentLesson &&
+        state.currentLesson.id &&
+        state.currentLesson.course_id
+      ) {
+        await fromApi.deleteLesson(
+          state.currentLesson.course_id,
+          state.currentLesson.id
+        );
+        commit("resetCurrentLesson");
+        commit("toggleConfirmationModalActive", false);
+        commit("updateConfirmationEntity", "");
+        dispatch("getLessonsData", null, { root: true });
+      }
     } catch (error) {
       console.log(error);
     }

@@ -62,15 +62,15 @@ export default {
 .switch-label:after {
   top: 0;
   left: 0;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
   transition: left 0.25s ease;
 }
 .switch-input:checked + .switch-label:before {
-  background-color: $info;
+  background-color: darken($dark, 5%);
 }
 .switch-input:checked + .switch-label:after {
   left: 24px;

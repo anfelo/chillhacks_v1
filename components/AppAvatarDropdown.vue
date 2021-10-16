@@ -1,6 +1,6 @@
 <template>
   <div class="avatar">
-    <figure class="image is-32x32 has-background-info">
+    <figure class="image is-32x32">
       <img :src="`https://avatars.dicebear.com/api/bottts/${username}.svg`" />
     </figure>
   </div>
@@ -18,6 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~assets/styles/theme.scss";
 .avatar {
   padding: 0 0.5em;
   display: flex;
@@ -25,6 +26,7 @@ export default {
 
   .image {
     border-radius: 50%;
+    background-color: darken($dark, 5%);
   }
 }
 </style>
