@@ -121,6 +121,7 @@ body.dark-theme {
 
   &.full-width {
     margin-left: 0;
+    width: 100%;
   }
 }
 
