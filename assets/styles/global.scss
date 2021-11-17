@@ -61,6 +61,12 @@ hr {
   background-color: $light-grey;
 }
 
+table {
+  th {
+    color: $success;
+  }
+}
+
 .card-body p {
   color: var(--h-color) !important;
 }
@@ -149,7 +155,7 @@ pre {
 
 /* Blog
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.lesson-content h3 {
+.lesson-content h1 {
   font-size: 1.4em;
   margin-bottom: 10px;
   margin-top: 15px;

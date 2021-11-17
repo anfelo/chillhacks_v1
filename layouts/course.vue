@@ -9,6 +9,7 @@
           :isSidebarOpen="isSidebarOpen"
         />
       </div>
+      <div class="overlay"></div>
       <main
         :class="
           `course-content ${
@@ -73,15 +74,31 @@ export default {
 <style lang="scss" scoped>
 .course-container {
   display: flex;
+
+  .overlay {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 31;
+  }
+}
+
+body.dark-theme {
+  .sidenav-container {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
 }
 
 .sidenav-container {
   position: fixed;
   width: 360px;
-  height: 100vh;
+  height: 100%;
   overflow: auto;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
-  z-index: 31;
+  z-index: 32;
   transition: left 0.2s;
 
   &.collapsed {
@@ -90,17 +107,38 @@ export default {
 
   &.opened {
     left: 0;
+
+    & + .overlay {
+      display: block;
+    }
   }
 }
 
 .course-content {
   flex: 1;
-  margin-left: 360px;
   padding: 0 1rem;
   transition: all 0.2s;
 
   &.full-width {
     margin-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidenav-container {
+    .overlay {
+      display: none;
+    }
+
+    &.opened {
+      & + .overlay {
+        display: none;
+      }
+    }
+  }
+
+  .course-content {
+    margin-left: 360px;
   }
 }
 </style>

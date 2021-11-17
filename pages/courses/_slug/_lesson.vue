@@ -1,6 +1,6 @@
 <template>
   <div class="lesson-container">
-    <h1 class="lesson-title title">{{ currentLesson.title }}</h1>
+    <h1 class="lesson-title title is-size-1">{{ currentLesson.title }}</h1>
     <div class="lesson-content">
       <AppMarkdown :markdown="currentLesson.content" />
     </div>
